@@ -45,6 +45,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.locale.LocaleMiddleware",  # Middleware de localisation
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -121,6 +122,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',  # Dossier static à la racine de votre projet
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # Dossier où les fichiers seront collectés lors du déploiement
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Fichiers médias
 MEDIA_URL = '/media/'  # URL pour accéder aux fichiers médias téléchargés
