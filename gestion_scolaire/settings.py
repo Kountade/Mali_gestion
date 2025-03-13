@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "django_bootstrap5",
     'formtools',
+    "django_weasyprint",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
