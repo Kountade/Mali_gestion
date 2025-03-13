@@ -1,0 +1,104 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex justify-content-between align-items-center pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">Liste des Niveaux</h3>
+      </div>
+      <a href="{% url 'ajouter_niveau' %}" class="btn btn-success btn-lg">
+        <i class="fas fa-plus"></i> Ajouter un Niveau
+      </a>
+    </div>
+    {% if messages %}
+    <div class="container mt-3">
+      {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Barre de recherche -->
+    <div class="row mb-4">
+      <div class="col-md-8">
+        <form method="GET" action="" class="input-group">
+          <input
+            type="text"
+            name="q"
+            class="form-control"
+            placeholder="Rechercher un niveau (ex: Sixième, Cinquième...)"
+          />
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Affichage des niveaux -->
+    <div class="row">
+      {% for niveau in niveaux %}
+      <div class="col-sm-6 col-md-4 mb-4">
+        <div class="card shadow-lg border-0 rounded-3">
+          <div class="card-body text-center p-4">
+            <span
+              class="badge bg-primary px-4 py-3 rounded d-inline-block"
+              style="
+                font-size: 1rem;
+                font-family: 'Arial Black', sans-serif;
+                box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+              "
+            >
+              <strong
+                style="
+                  font-size: 1.2rem;
+                  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+                "
+              >
+                {{ niveau.nom }}
+              </strong>
+            </span>
+
+            <p class="text-muted mb-4">{{ niveau.ordre }}</p>
+
+            <!-- Boutons actions -->
+            <div class="d-flex justify-content-between mt-3">
+              <a href="" class="btn btn-outline-primary px-3 py-2">
+                <i class="fas fa-eye"></i> <strong> Détails </strong>
+              </a>
+              <a
+                href="{% url 'modifier_niveau' niveau.id %}"
+                class="btn btn-outline-warning px-3 py-2"
+              >
+                <i class="fas fa-edit"></i> <strong> Modifier </strong>
+              </a>
+              <a
+                href="{% url 'supprimer_niveau' niveau.id %}"
+                class="btn btn-outline-danger px-3 py-2"
+                onclick="return confirm('Voulez-vous vraiment supprimer ce niveau ?')"
+              >
+                <i class="fas fa-trash"></i> <strong> Supprimer </strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-center text-muted">Aucun niveau enregistré.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

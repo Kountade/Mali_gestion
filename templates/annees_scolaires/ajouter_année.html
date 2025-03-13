@@ -1,0 +1,127 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">Ajouter une Année Scolaire</h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}"><i class="icon-home"></i></a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item">
+          <a href="{% url 'liste_annees_scolaires' %}">Années Scolaires</a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item active">Ajouter</li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <div class="card mb-4" style="border: 2px solid #007bff">
+          <div
+            class="card-header text-white fw-bold text-center"
+            style="background-color: #007bff"
+          >
+            Formulaire d'Ajout
+          </div>
+          <div class="card-body">
+            <form method="POST" class="row g-3">
+              {% csrf_token %}
+
+              <div class="col-md-6">
+                <label for="id_reference" class="form-label">Référence</label>
+                {{ form.reference }} {% for error in form.reference.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_debut" class="form-label">Date de Début</label>
+                {{ form.debut }} {% for error in form.debut.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_fin" class="form-label">Date de Fin</label>
+                {{ form.fin }} {% for error in form.fin.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_statut" class="form-label">Statut</label>
+                {{ form.statut }} {% for error in form.statut.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-12">
+                <label for="id_description" class="form-label"
+                  >Description</label
+                >
+                {{ form.description }} {% for error in form.description.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <h5 class="mt-4">Statistiques (Lecture seule)</h5>
+
+              <div class="col-md-4">
+                <label for="id_nombre_classes" class="form-label"
+                  >Nombre de Classes</label
+                >
+                {{ form.nombre_classes }}
+              </div>
+
+              <div class="col-md-4">
+                <label for="id_nombre_eleves" class="form-label"
+                  >Nombre d'Élèves</label
+                >
+                {{ form.nombre_eleves }}
+              </div>
+
+              <div class="col-md-4">
+                <label for="id_nombre_professeurs" class="form-label"
+                  >Nombre de Professeurs</label
+                >
+                {{ form.nombre_professeurs }}
+              </div>
+
+              <div class="col-md-4">
+                <label for="id_nombre_examens" class="form-label"
+                  >Nombre d'Examens</label
+                >
+                {{ form.nombre_examens }}
+              </div>
+
+              <div class="col-md-4">
+                <label for="id_nombre_surveillants" class="form-label"
+                  >Nombre de Surveillants</label
+                >
+                {{ form.nombre_surveillants }}
+              </div>
+
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg">
+                  <i class="bi bi-check-circle"></i> Enregistrer
+                </button>
+                <button type="reset" class="btn btn-secondary btn-lg">
+                  <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
+                </button>
+                <a
+                  href="{% url 'liste_annees_scolaires' %}"
+                  class="btn btn-primary btn-lg"
+                >
+                  <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

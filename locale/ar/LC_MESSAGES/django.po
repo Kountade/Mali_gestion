@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-13 16:34+0000\n"
+"PO-Revision-Date: 2025-03-13 16:34+0000\n"
+"Last-Translator: YOUR NAME <your.email@example.com>\n"
+"Language-Team: Arabic <ar@li.org>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: .\application\forms.py:16 .\templates\niveaux\ajouter_niveau.html:41
+msgid "Nom du Niveau"
+msgstr "اسم المستوى"
+
+#: .\application\forms.py:17 .\templates\niveaux\ajouter_niveau.html:61
+msgid "Description"
+msgstr "الوصف"
+
+#: .\application\forms.py:18
+msgid "Ordre d'affichage"
+msgstr "ترتيب العرض"
+
+#: .\application\forms.py:21
+msgid "Entrez le nom du niveau."
+msgstr "أدخل اسم المستوى."
+
+#: .\application\forms.py:22
+msgid "Entrez une description optionnelle."
+msgstr "أدخل وصفًا اختياريًا."
+
+#: .\application\forms.py:23
+msgid "Définissez l'ordre d'affichage du niveau."
+msgstr "حدد ترتيب عرض المستوى."
+
+#: .\application\models.py:31
+msgid "En cours"
+msgstr "قيد التقدم"
+
+#: .\application\models.py:32
+msgid "Clôturée"
+msgstr "مغلقة"
+
+#: .\application\views.py:338
+msgid "Niveau ajouté avec succès !"
+msgstr "تمت إضافة المستوى بنجاح!"
+
+#: .\gestion_scolaire\settings.py:109
+msgid "Français"
+msgstr "الفرنسية"
+
+#: .\gestion_scolaire\settings.py:110
+msgid "Anglais"
+msgstr "الإنجليزية"
+
+#: .\gestion_scolaire\settings.py:111
+msgid "العربية"
+msgstr "العربية"
+
+#: .\templates\index.html:13
+msgid "Année Scolaire"
+msgstr "السنة الدراسية"
+
+#: .\templates\index.html:40
+msgid "Élèves"
+msgstr "التلاميذ"
+
+#: .\templates\index.html:61
+msgid "Professeurs"
+msgstr "المعلمون"
+
+#: .\templates\index.html:82
+msgid "Classes"
+msgstr "الفصول"
+
+#: .\templates\index.html:103
+msgid "Surveillants"
+msgstr "المشرفون"
+
+#: .\templates\index.html:119
+msgid "Professeurs les plus anciens"
+msgstr "أقدم المعلمين"
+
+#: .\templates\index.html:136 .\templates\index.html:196
+#: .\templates\index.html:269 .\templates\index.html:305
+msgid "Action"
+msgstr "إجراء"
+
+#: .\templates\index.html:137 .\templates\index.html:197
+#: .\templates\index.html:270 .\templates\index.html:306
+msgid "Another action"
+msgstr "إجراء آخر"
+
+#: .\templates\index.html:138 .\templates\index.html:198
+#: .\templates\index.html:271 .\templates\index.html:307
+msgid "Something else here"
+msgstr "شيء آخر هنا"
+
+#: .\templates\index.html:179
+msgid "Historique des Paiements"
+msgstr "سجل المدفوعات"
+
+#: .\templates\index.html:210
+msgid "Référence"
+msgstr "المرجع"
+
+#: .\templates\index.html:211
+msgid "Date et Heure"
+msgstr "التاريخ والوقت"
+
+#: .\templates\index.html:212
+msgid "Montant"
+msgstr "المبلغ"
+
+#: .\templates\index.html:213
+msgid "Statut"
+msgstr "الحالة"
+
+#: .\templates\index.html:225
+msgid "Paiement"
+msgstr "الدفع"
+
+#: .\templates\index.html:252
+msgid "Répartition des élèves par niveau"
+msgstr "توزيع التلاميذ حسب المستوى"
+
+#: .\templates\index.html:288
+msgid "Répartition des élèves par sexe"
+msgstr "توزيع التلاميذ حسب الجنس"
+
+#: .\templates\index.html:368
+msgid "Hommes"
+msgstr "رجال"
+
+#: .\templates\index.html:368
+msgid "Femmes"
+msgstr "نساء"
+
+#: .\templates\niveaux\ajouter_niveau.html:8
+msgid "Ajouter un Niveau"
+msgstr "إضافة مستوى"
+
+#: .\templates\niveaux\ajouter_niveau.html:16
+msgid "Niveaux"
+msgstr "المستويات"
+
+#: .\templates\niveaux\ajouter_niveau.html:20
+msgid "Ajouter"
+msgstr "إضافة"
+
+#: .\templates\niveaux\ajouter_niveau.html:32
+msgid "Formulaire d'Ajout d'un Niveau"
+msgstr "نموذج إضافة مستوى"
+
+#: .\templates\niveaux\ajouter_niveau.html:51
+msgid "Ordre"
+msgstr "الترتيب"
+
+#: .\templates\niveaux\ajouter_niveau.html:71
+msgid "Enregistrer"
+msgstr "حفظ"
+
+#: .\templates\niveaux\ajouter_niveau.html:75
+msgid "Réinitialiser"
+msgstr "إعادة تعيين"
+
+#: .\templates\niveaux\ajouter_niveau.html:82
+msgid "Retour à la liste"
+msgstr "العودة إلى القائمة"

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex justify-content-between align-items-center pt-2 pb-4">
+      <h3 class="fw-bold mb-3">Liste des Professeurs</h3>
+      <a href="{% url 'ajouter_professeur' %}" class="btn btn-success btn-lg">
+        <i class="fas fa-plus"></i> Ajouter un Professeur
+      </a>
+    </div>
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Barre de recherche et filtre -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <form method="GET" action="" class="input-group">
+          <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            class="form-control"
+            placeholder="Rechercher un professeur par nom..."
+          />
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="col-md-4">
+        <form method="GET" action="">
+          <div class="input-group">
+            <select class="form-select" name="specialite">
+              <option value="">Toutes les spécialités</option>
+              {% for specialite in specialites %}
+                <option value="{{ specialite }}" {% if specialite == specialite_filter %}selected{% endif %}>
+                  {{ specialite }}
+                </option>
+              {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-secondary">
+              <i class="fas fa-filter"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Liste des professeurs -->
+    <div class="row">
+      {% for professeur in professeurs %}
+      <div class="col-sm-6 col-md-4 mb-4">
+        <div class="card shadow-lg border-0 rounded-3">
+          <div class="card-body text-center p-4">
+            <!-- Image du professeur -->
+            {% if professeur.image %}
+              <img
+                src="{{ professeur.image.url }}"
+                alt="Photo de {{ professeur.nom }}"
+                class="rounded-circle mb-3"
+                width="120px"
+                height="120px"
+                style="object-fit: cover;"
+              />
+            {% else %}
+              <img
+                src="{% static 'assets/img/default.jpg' %}"
+                alt="Photo par défaut"
+                class="rounded-circle mb-3"
+                width="120px"
+                height="120px"
+                style="object-fit: cover;"
+              />
+            {% endif %}
+
+            <h5 class="fw-bold">{{ professeur.nom }} {{ professeur.prenom }}</h5>
+            <p class="text-muted mb-1"><strong>Spécialité :</strong> {{ professeur.specialite }}</p>
+            <p class="text-muted mb-1"><strong>Téléphone :</strong> {{ professeur.telephone }}</p>
+
+            <!-- Boutons actions -->
+            <div class="d-flex justify-content-between mt-3">
+              <a href="" class="btn btn-outline-primary px-3 py-2">
+                <i class="fas fa-eye"></i> <strong> Détails </strong>
+              </a>
+              <a href="{% url 'modifier_professeur' professeur.id %}" class="btn btn-outline-warning px-3 py-2">
+                <i class="fas fa-edit"></i> <strong> Modifier </strong>
+              </a>
+              <a href="{% url 'supprimer_professeur' professeur.id %}" class="btn btn-outline-danger px-3 py-2" onclick="return confirm('Voulez-vous vraiment supprimer ce professeur ?')">
+                <i class="fas fa-trash"></i> <strong> Supprimer </strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center">
+        <p class="text-muted">Aucun professeur trouvé.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

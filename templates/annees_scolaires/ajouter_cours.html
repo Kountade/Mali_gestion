@@ -1,0 +1,111 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">Ajouter un Cours</h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}"><i class="icon-home"></i></a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item">
+          <a href="{% url 'calendrier_cours' %}">Cours</a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item active">Ajouter</li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <div class="card mb-4" style="border: 2px solid #007bff">
+          <div
+            class="card-header text-white fw-bold text-center"
+            style="background-color: #007bff"
+          >
+            Formulaire d'Ajout d'un Cours
+          </div>
+          <div class="card-body">
+            <form method="POST" class="row g-3">
+              {% csrf_token %}
+
+              <!-- Matière -->
+              <div class="col-md-6">
+                <label for="id_matiere" class="form-label">Matière</label>
+                {{ form.matiere }} {% for error in form.matiere.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Professeur -->
+              <div class="col-md-6">
+                <label for="id_professeur" class="form-label">Professeur</label>
+                {{ form.professeur }} {% for error in form.professeur.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Salle -->
+              <div class="col-md-6">
+                <label for="id_salle" class="form-label">Salle</label>
+                {{ form.salle }} {% for error in form.salle.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Date -->
+              <div class="col-md-6">
+                <label for="id_date" class="form-label">Date du Cours</label>
+                {{ form.date }} {% for error in form.date.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Heure de début -->
+              <div class="col-md-6">
+                <label for="id_heure_debut" class="form-label"
+                  >Heure de début</label
+                >
+                {{ form.heure_debut }} {% for error in form.heure_debut.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Heure de fin -->
+              <div class="col-md-6">
+                <label for="id_heure_fin" class="form-label"
+                  >Heure de fin</label
+                >
+                {{ form.heure_fin }} {% for error in form.heure_fin.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Classe -->
+              <div class="col-md-6">
+                <label for="id_classe" class="form-label">Classe</label>
+                {{ form.classe }} {% for error in form.classe.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Boutons -->
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg">
+                  <i class="bi bi-check-circle"></i> Enregistrer
+                </button>
+                <button type="reset" class="btn btn-secondary btn-lg">
+                  <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
+                </button>
+                <a href="{% url 'calendrier' %}" class="btn btn-primary btn-lg">
+                  <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

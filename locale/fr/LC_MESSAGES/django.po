@@ -1,0 +1,177 @@
+# French translations for PACKAGE.
+# Copyright (C) 2023 YOUR ORGANIZATION
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-13 16:34+0000\n"
+"PO-Revision-Date: 2023-10-10 12:00+0000\n"
+"Last-Translator: YOUR NAME <your.email@example.com>\n"
+"Language-Team: French <fr@example.com>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\application\forms.py:16 .\templates\niveaux\ajouter_niveau.html:41
+msgid "Nom du Niveau"
+msgstr "Nom du Niveau"
+
+#: .\application\forms.py:17 .\templates\niveaux\ajouter_niveau.html:61
+msgid "Description"
+msgstr "Description"
+
+#: .\application\forms.py:18
+msgid "Ordre d'affichage"
+msgstr "Ordre d'affichage"
+
+#: .\application\forms.py:21
+msgid "Entrez le nom du niveau."
+msgstr "Entrez le nom du niveau."
+
+#: .\application\forms.py:22
+msgid "Entrez une description optionnelle."
+msgstr "Entrez une description optionnelle."
+
+#: .\application\forms.py:23
+msgid "Définissez l'ordre d'affichage du niveau."
+msgstr "Définissez l'ordre d'affichage du niveau."
+
+#: .\application\models.py:31
+msgid "En cours"
+msgstr "En cours"
+
+#: .\application\models.py:32
+msgid "Clôturée"
+msgstr "Clôturée"
+
+#: .\application\views.py:338
+msgid "Niveau ajouté avec succès !"
+msgstr "Niveau ajouté avec succès !"
+
+#: .\gestion_scolaire\settings.py:109
+msgid "Français"
+msgstr "Français"
+
+#: .\gestion_scolaire\settings.py:110
+msgid "Anglais"
+msgstr "Anglais"
+
+#: .\gestion_scolaire\settings.py:111
+msgid "العربية"
+msgstr "Arabe"
+
+#: .\templates\index.html:13
+msgid "Année Scolaire"
+msgstr "Année Scolaire"
+
+#: .\templates\index.html:40
+msgid "Élèves"
+msgstr "Élèves"
+
+#: .\templates\index.html:61
+msgid "Professeurs"
+msgstr "Professeurs"
+
+#: .\templates\index.html:82
+msgid "Classes"
+msgstr "Classes"
+
+#: .\templates\index.html:103
+msgid "Surveillants"
+msgstr "Surveillants"
+
+#: .\templates\index.html:119
+msgid "Professeurs les plus anciens"
+msgstr "Professeurs les plus anciens"
+
+#: .\templates\index.html:136 .\templates\index.html:196
+#: .\templates\index.html:269 .\templates\index.html:305
+msgid "Action"
+msgstr "Action"
+
+#: .\templates\index.html:137 .\templates\index.html:197
+#: .\templates\index.html:270 .\templates\index.html:306
+msgid "Another action"
+msgstr "Une autre action"
+
+#: .\templates\index.html:138 .\templates\index.html:198
+#: .\templates\index.html:271 .\templates\index.html:307
+msgid "Something else here"
+msgstr "Autre chose ici"
+
+#: .\templates\index.html:179
+msgid "Historique des Paiements"
+msgstr "Historique des Paiements"
+
+#: .\templates\index.html:210
+msgid "Référence"
+msgstr "Référence"
+
+#: .\templates\index.html:211
+msgid "Date et Heure"
+msgstr "Date et Heure"
+
+#: .\templates\index.html:212
+msgid "Montant"
+msgstr "Montant"
+
+#: .\templates\index.html:213
+msgid "Statut"
+msgstr "Statut"
+
+#: .\templates\index.html:225
+msgid "Paiement"
+msgstr "Paiement"
+
+#: .\templates\index.html:252
+msgid "Répartition des élèves par niveau"
+msgstr "Répartition des élèves par niveau"
+
+#: .\templates\index.html:288
+msgid "Répartition des élèves par sexe"
+msgstr "Répartition des élèves par sexe"
+
+#: .\templates\index.html:368
+msgid "Hommes"
+msgstr "Hommes"
+
+#: .\templates\index.html:368
+msgid "Femmes"
+msgstr "Femmes"
+
+#: .\templates\niveaux\ajouter_niveau.html:8
+msgid "Ajouter un Niveau"
+msgstr "Ajouter un Niveau"
+
+#: .\templates\niveaux\ajouter_niveau.html:16
+msgid "Niveaux"
+msgstr "Niveaux"
+
+#: .\templates\niveaux\ajouter_niveau.html:20
+msgid "Ajouter"
+msgstr "Ajouter"
+
+#: .\templates\niveaux\ajouter_niveau.html:32
+msgid "Formulaire d'Ajout d'un Niveau"
+msgstr "Formulaire d'Ajout d'un Niveau"
+
+#: .\templates\niveaux\ajouter_niveau.html:51
+msgid "Ordre"
+msgstr "Ordre"
+
+#: .\templates\niveaux\ajouter_niveau.html:71
+msgid "Enregistrer"
+msgstr "Enregistrer"
+
+#: .\templates\niveaux\ajouter_niveau.html:75
+msgid "Réinitialiser"
+msgstr "Réinitialiser"
+
+#: .\templates\niveaux\ajouter_niveau.html:82
+msgid "Retour à la liste"
+msgstr "Retour à la liste"

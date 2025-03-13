@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header d-flex align-items-center justify-content-between">
+      <h3 class="fw-bold mb-3">
+        <i class="fas fa-chalkboard"></i> Détails de la Classe : {{ classe.nom }}
+      </h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="#">
+            <i class="fas fa-home"></i>
+          </a>
+        </li>
+        <li class="separator">
+          <i class="fas fa-chevron-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#"><i class="fas fa-user-graduate"></i> Élèves</a>
+        </li>
+        <li class="separator">
+          <i class="fas fa-chevron-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#"><i class="fas fa-school"></i> {{ classe.nom }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Onglets -->
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="eleves-tab" data-toggle="tab" href="#eleves" role="tab">
+              <i class="fas fa-users"></i> Élèves
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="devoirs-tab" data-toggle="tab" href="#devoirs" role="tab">
+              <i class="fas fa-book-open"></i> Devoirs
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="compositions-tab" data-toggle="tab" href="#compositions" role="tab">
+              <i class="fas fa-file-alt"></i> Compositions
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="notes-devoirs-tab" data-toggle="tab" href="#notes-devoirs" role="tab">
+              <i class="fas fa-star"></i> Notes Devoirs
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="notes-compositions-tab" data-toggle="tab" href="#notes-compositions" role="tab">
+              <i class="fas fa-graduation-cap"></i> Notes Compositions
+            </a>
+          </li>
+        </ul>
+
+        <!-- Contenu des onglets -->
+        <div class="tab-content" id="myTabContent">
+          <!-- Onglet Élèves -->
+          <div class="tab-pane fade show active" id="eleves" role="tabpanel">
+            <div class="card mt-4">
+              <div class="card-header bg-primary text-white">
+                <h4 class="card-title"><i class="fas fa-users"></i> Liste des Élèves</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover datatable">
+                    <thead class="bg-light">
+                      <tr>
+                        <th><i class="fas fa-id-badge"></i> Matricule</th>
+                        <th><i class="fas fa-user"></i> Nom</th>
+                        <th><i class="fas fa-user"></i> Prénom</th>
+                        <th><i class="fas fa-calendar"></i> Date de Naissance</th>
+                        <th><i class="fas fa-venus-mars"></i> Sexe</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for eleve in eleves %}
+                      <tr>
+                        <td>{{ eleve.matricule }}</td>
+                        <td>{{ eleve.nom }}</td>
+                        <td>{{ eleve.prenom }}</td>
+                        <td>{{ eleve.date_naissance }}</td>
+                        <td>{{ eleve.get_sexe_display }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Onglet Devoirs -->
+          <div class="tab-pane fade" id="devoirs" role="tabpanel">
+            <div class="card mt-4">
+              <div class="card-header bg-warning text-white">
+                <h4 class="card-title"><i class="fas fa-book"></i> Devoirs</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover datatable">
+                    <thead class="bg-light">
+                      <tr>
+                        <th><i class="fas fa-book"></i> Matière</th>
+                        <th><i class="fas fa-calendar"></i> Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for devoir in devoirs %}
+                      <tr>
+                        <td>{{ devoir.matiere }}</td>
+                        <td>{{ devoir.date }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Onglet Compositions -->
+          <div class="tab-pane fade" id="compositions" role="tabpanel">
+            <div class="card mt-4">
+              <div class="card-header bg-info text-white">
+                <h4 class="card-title"><i class="fas fa-file-alt"></i> Compositions</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover datatable">
+                    <thead class="bg-light">
+                      <tr>
+                        <th><i class="fas fa-book"></i> Matière</th>
+                        <th><i class="fas fa-calendar"></i> Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for composition in compositions %}
+                      <tr>
+                        <td>{{ composition.matiere }}</td>
+                        <td>{{ composition.date }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Onglet Notes Devoirs -->
+          <div class="tab-pane fade" id="notes-devoirs" role="tabpanel">
+            <div class="card mt-4">
+              <div class="card-header bg-success text-white">
+                <h4 class="card-title"><i class="fas fa-star"></i> Notes Devoirs</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover datatable">
+                    <thead class="bg-light">
+                      <tr>
+                        <th><i class="fas fa-user"></i> Élève</th>
+                        <th><i class="fas fa-book"></i> Devoir</th>
+                        <th><i class="fas fa-star"></i> Note</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for note in notes_devoirs %}
+                      <tr>
+                        <td>{{ note.eleve }}</td>
+                        <td>{{ note.devoir }}</td>
+                        <td>{{ note.note }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Onglet Notes Compositions -->
+          <div class="tab-pane fade" id="notes-compositions" role="tabpanel">
+            <div class="card mt-4">
+              <div class="card-header bg-danger text-white">
+                <h4 class="card-title"><i class="fas fa-graduation-cap"></i> Notes Compositions</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover datatable">
+                    <thead class="bg-light">
+                      <tr>
+                        <th><i class="fas fa-user"></i> Élève</th>
+                        <th><i class="fas fa-file-alt"></i> Composition</th>
+                        <th><i class="fas fa-star"></i> Note</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for note in notes_compositions %}
+                      <tr>
+                        <td>{{ note.eleve }}</td>
+                        <td>{{ note.composition }}</td>
+                        <td>{{ note.note }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Styles CSS pour améliorer l'affichage -->
+<style>
+  .table-responsive {
+    overflow-x: auto;
+  }
+  th,
+  td {
+    text-align: center;
+  }
+  .nav-tabs .nav-link {
+    font-weight: bold;
+  }
+  .nav-tabs .nav-link i {
+    margin-right: 5px;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>
+
+<!-- FontAwesome pour les icônes -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<!-- jQuery et Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $(".datatable").DataTable({
+      pageLength: 10,
+      responsive: true,
+      autoWidth: false,
+      columnDefs: [
+        { width: "20%", targets: 0 },
+        { width: "15%", targets: "_all" },
+      ],
+      language: {
+        paginate: {
+          previous: "<i class='fas fa-chevron-left'></i>",
+          next: "<i class='fas fa-chevron-right'></i>",
+        },
+      },
+    });
+  });
+</script>
+
+{% endblock content %}

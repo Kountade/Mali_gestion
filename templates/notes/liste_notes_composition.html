@@ -1,0 +1,115 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">Liste des Notes de Composition</h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}">
+            <i class="icon-home"></i>
+          </a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'liste_notes_composition' %}">Notes</a>
+        </li>
+      </ul>
+    </div>
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <h4 class="card-title">Liste des Notes</h4>
+              <a
+                href="{% url 'ajouter_note_composition' %}"
+                class="btn btn-outline-primary ms-auto"
+              >
+                <i class="bi bi-plus-square"></i> Ajouter une Note
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table
+                id="notes-table"
+                class="display table table-striped table-hover"
+              >
+                <thead>
+                  <tr>
+                    <th>Élève</th>
+                    <th>Composition</th>
+                    <th>Note</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for note in notes %}
+                  <tr>
+                    <td>{{ note.eleve }}</td>
+                    <td>{{ note.composition }}</td>
+                    <td>{{ note.note }}</td>
+                    <td>{{ note.date_ajout|date:"d/m/Y" }}</td>
+                    <td>
+                      <a
+                        href="{% url 'modifier_note_composition' note.id %}"
+                        class="btn btn-sm btn-warning"
+                        title="Modifier"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </a>
+                      <a
+                        href="{% url 'supprimer_note_composition' note.id %}"
+                        class="btn btn-sm btn-danger"
+                        title="Supprimer"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS pour DataTable -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#notes-table").DataTable({
+      pageLength: 10,
+      responsive: true,
+      scrollX: false,
+    });
+  });
+</script>
+
+{% endblock content %}

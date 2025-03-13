@@ -1,0 +1,95 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block content %}
+
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex justify-content-between align-items-center pt-2 pb-4">
+      <div>
+        <h3 class="fw-bold mb-3">Liste des Matières</h3>
+      </div>
+      <a href="{% url 'ajouter_matiere' %}" class="btn btn-success btn-lg">
+        <i class="fas fa-plus"></i> Ajouter une Matière
+      </a>
+    </div>
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <!-- Recherche et Filtrage -->
+    <div class="row mb-4">
+      <div class="col-md-8">
+        <form method="GET" action="" class="input-group">
+          <input
+            type="text"
+            name="recherche"
+            class="form-control"
+            placeholder="Rechercher une matière par nom..."
+            value="{{ request.GET.recherche }}"
+          />
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="col-md-4">
+        <form method="GET" action="">
+          <div class="input-group">
+            <select name="coefficient" class="form-select">
+              <option value="">Tous les coefficients</option>
+              {% for coef in coefficients %}
+              <option value="{{ coef }}" {% if request.GET.coefficient == coef|stringformat:"s" %}selected{% endif %}>
+                Coefficient {{ coef }}
+              </option>
+              {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-secondary">
+              <i class="fas fa-filter"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Liste des matières -->
+    <div class="row">
+      {% for matiere in matieres %}
+      <div class="col-sm-6 col-md-4 mb-4">
+        <div class="card shadow-lg border-0 rounded-3">
+          <div class="card-body text-center p-4">
+            {% if matiere.image %}
+            <img src="{{ matiere.image.url }}" alt="{{ matiere.nom }}" class="rounded-circle mb-3" width="100px" height="100px" style="object-fit: cover;">
+            {% else %}
+            <img src="{% static 'matieres/default.jpg' %}" alt="Image par défaut" class="rounded-circle mb-3" width="100px" height="100px" style="object-fit: cover;">
+            {% endif %}
+            <h5 class="fw-bold">{{ matiere.nom }}</h5>
+            <p class="text-muted">Coefficient: {{ matiere.coefficient }}</p>
+            
+            <div class="d-flex justify-content-between mt-3">
+             
+              <a href="{% url 'modifier_matiere' matiere.id %}" class="btn btn-outline-warning px-3 py-2">
+                <i class="fas fa-edit"></i> <strong> Modifier </strong>
+              </a>
+              <a href="{% url 'supprimer_matiere' matiere.id %}" class="btn btn-outline-danger px-3 py-2" onclick="return confirm('Voulez-vous vraiment supprimer cette matière ?')">
+                <i class="fas fa-trash"></i> <strong> Supprimer </strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-center text-muted">Aucune matière trouvée.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

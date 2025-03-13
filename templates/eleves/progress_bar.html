@@ -1,0 +1,63 @@
+{% load static %}
+<style>
+  /* Style du progress bar en étapes */
+  .progressbar {
+    counter-reset: step;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    list-style-type: none;
+    padding: 0;
+  }
+  .progressbar li {
+    text-align: center;
+    position: relative;
+    flex: 1;
+  }
+  .progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border: 2px solid #007bff;
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+  .progressbar li.active:before {
+    background-color: #007bff;
+    color: #fff;
+  }
+  .progressbar li:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #007bff;
+    top: 15px;
+    left: -50%;
+    z-index: -1;
+  }
+  .progressbar li:first-child:after {
+    content: none;
+  }
+</style>
+
+<ul class="progressbar">
+  <li
+    class="{% if wizard.steps.current == 'etape1' or wizard.steps.current == 'etape2' or wizard.steps.current == 'etape3' %}active{% endif %}"
+  >
+    Informations élève
+  </li>
+  <li
+    class="{% if wizard.steps.current == 'etape2' or wizard.steps.current == 'etape3' %}active{% endif %}"
+  >
+    Informations parents
+  </li>
+  <li class="{% if wizard.steps.current == 'etape3' %}active{% endif %}">
+    Autres informations
+  </li>
+</ul>

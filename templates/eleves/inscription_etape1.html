@@ -1,0 +1,56 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">
+        Inscription de l'élève - Étape 1 : Informations sur l'élève
+      </h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}"><i class="icon-home"></i></a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item active">Étape 1</li>
+      </ul>
+    </div>
+
+    <!-- Progress Bar -->
+    {% include "eleves/progress_bar.html" %}
+
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <div class="card mb-4" style="border: 2px solid #007bff">
+          <div
+            class="card-header text-white fw-bold text-center"
+            style="background-color: #007bff"
+          >
+            Formulaire d'Inscription - Informations sur l'élève
+          </div>
+          <div class="card-body">
+            <form method="POST" enctype="multipart/form-data" class="row g-3">
+              {% csrf_token %} {{ wizard.management_form }}
+              <div class="row">
+                {% for field in wizard.form %}
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    {{ field.label_tag }} {{ field }} {% if field.errors %} {% for error in field.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                    {% endfor %} {% endif %}
+                  </div>
+                </div>
+                {% if forloop.counter|divisibleby:"2" and not forloop.last %}
+              </div>
+              <div class="row">{% endif %} {% endfor %}</div>
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <i class="bi bi-check-circle"></i> Suivant
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

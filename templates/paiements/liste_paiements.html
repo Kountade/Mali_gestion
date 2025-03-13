@@ -1,0 +1,157 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">Liste des Paiements</h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}">
+            <i class="icon-home"></i>
+          </a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'liste_paiements' %}">Paiements</a>
+        </li>
+      </ul>
+    </div>
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <h4 class="card-title">Liste des Paiements</h4>
+              <a
+                href="{% url 'creer_paiement' %}"
+                class="btn btn-outline-primary ms-auto"
+              >
+                <i class="bi bi-plus-square"></i> Ajouter un Paiement
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table
+                id="paiements-table"
+                class="display table table-striped table-hover"
+              >
+                <thead>
+                  <tr>
+                    <th style="width: 150px">Référence</th>
+                    <th style="width: 150px">Élève</th>
+                    <th style="width: 100px">Date de Paiement</th>
+                    <th style="width: 100px">Montant</th>
+                    <th style="width: 100px">Statut</th>
+                    <th style="width: 100px">Plan de Paiement</th>
+                    <th style="width: 100px">Mois/Année</th>
+                    <th style="width: 200px">Commentaires</th>
+                    <th style="width: 100px">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for paiement in paiements %}
+                  <tr>
+                    <td>{{ paiement.reference }}</td>
+                    <td>
+                      {{ paiement.eleve.nom }} {{ paiement.eleve.prenom }}
+                    </td>
+                    <td>{{ paiement.date_paiement|date:"d/m/Y" }}</td>
+                    <td>{{ paiement.montant }} €</td>
+                    <td>{{ paiement.get_statut_display }}</td>
+                    <td>{{ paiement.get_plan_paiement_display }}</td>
+                    <td>{{ paiement.mois_annee }}</td>
+                    <td>{{ paiement.commentaires|default:"-" }}</td>
+                    <td>
+                      <a
+                        href="{% url 'details_paiement' paiement.id %}"
+                        class="btn btn-sm btn-info"
+                        title="Détails"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </a>
+                      <a
+                        href="{% url 'modifier_paiement' paiement.id %}"
+                        class="btn btn-sm btn-warning"
+                        title="Modifier"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </a>
+                      <a
+                        href="{% url 'supprimer_paiement' paiement.id %}"
+                        class="btn btn-sm btn-danger"
+                        title="Supprimer"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Styles CSS pour supprimer la barre de défilement horizontale -->
+<style>
+  .table-responsive {
+    overflow-x: hidden; /* Supprime le défilement horizontal */
+  }
+  table {
+    width: 100%;
+    table-layout: fixed; /* Force un ajustement des colonnes */
+    white-space: nowrap; /* Évite le retour à la ligne dans les cellules */
+  }
+  th,
+  td {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Tronque le texte trop long */
+  }
+</style>
+
+<!-- JS pour DataTable avec filtres automatiques -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#paiements-table").DataTable({
+      pageLength: 10,
+      autoWidth: false,
+      responsive: true,
+      scrollX: false,
+      columnDefs: [
+        { width: "150px", targets: [0, 1] }, // Réduit la largeur des colonnes "Référence" et "Élève"
+        { width: "100px", targets: [2, 3, 4, 5, 6] }, // Réduit la largeur des autres colonnes
+        { width: "200px", targets: 7 }, // Largeur pour la colonne "Commentaires"
+        { width: "100px", targets: 8 }, // Largeur pour la colonne "Actions"
+      ],
+    });
+  });
+</script>
+
+{% endblock content %}

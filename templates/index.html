@@ -1,0 +1,400 @@
+{% extends "base.html" %}
+{% load i18n %}  <!-- Ajoutez i18n ici -->
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"></div>
+
+    <!-- Filtre par année scolaire -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <form method="GET" action="{% url 'home' %}">
+          <div class="form-group">
+            <label for="annee_scolaire"><i class="fas fa-calendar-alt"></i> {% trans "Année Scolaire" %}</label>
+            <select class="form-control rounded-pill shadow-sm" id="annee_scolaire" name="annee_scolaire" onchange="this.form.submit()">
+              {% for annee in annees_scolaires %}
+                <option value="{{ annee.id }}" {% if annee.id == annee_scolaire.id %}selected{% endif %}>
+                  {{ annee.reference }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Cartes de statistiques -->
+    <div class="row">
+      <!-- Élèves -->
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round shadow-lg border-0">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center text-primary">
+                  <i class="fas fa-user-graduate fa-2x"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3">
+                <div class="numbers">
+                  <p class="card-category text-muted">{% trans "Élèves" %}</p>
+                  <h4 class="card-title">{{ nombre_eleves }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Professeurs -->
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round shadow-lg border-0">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center text-info">
+                  <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3">
+                <div class="numbers">
+                  <p class="card-category text-muted">{% trans "Professeurs" %}</p>
+                  <h4 class="card-title">{{ nombre_professeurs }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Classes -->
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round shadow-lg border-0">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center text-success">
+                  <i class="fas fa-school fa-2x"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3">
+                <div class="numbers">
+                  <p class="card-category text-muted">{% trans "Classes" %}</p>
+                  <h4 class="card-title">{{ nombre_classes }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Surveillants -->
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round shadow-lg border-0">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center text-secondary">
+                  <i class="fas fa-user-shield fa-2x"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3">
+                <div class="numbers">
+                  <p class="card-category text-muted">{% trans "Surveillants" %}</p>
+                  <h4 class="card-title">{{ nombre_surveillants }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Professeurs les plus anciens et Historique des Paiements -->
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-round">
+          <div class="card-body">
+            <div class="card-head-row card-tools-still-right">
+              <div class="card-title">{% trans "Professeurs les plus anciens" %}</div>
+              <div class="card-tools">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-icon btn-clean me-0"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-ellipsis-h"></i>
+                  </button>
+                  <div
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <a class="dropdown-item" href="#">{% trans "Action" %}</a>
+                    <a class="dropdown-item" href="#">{% trans "Another action" %}</a>
+                    <a class="dropdown-item" href="#">{% trans "Something else here" %}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-list py-4">
+              {% for professeur in professeurs_anciens %}
+              <div class="item-list">
+                <div class="avatar">
+                  {% if professeur.image %}
+                    <img
+                      src="{{ professeur.image.url }}"
+                      alt="{{ professeur.nom }}"
+                      class="avatar-img rounded-circle"
+                    />
+                  {% else %}
+                    <span class="avatar-title rounded-circle border border-white">
+                      {{ professeur.nom|first }}{{ professeur.prenom|first }}
+                    </span>
+                  {% endif %}
+                </div>
+                <div class="info-user ms-3">
+                  <div class="username">{{ professeur.nom }} {{ professeur.prenom }}</div>
+                  <div class="status">{{ professeur.specialite }}</div>
+                </div>
+                <button class="btn btn-icon btn-link op-8 me-1">
+                  <i class="far fa-envelope"></i>
+                </button>
+                <button class="btn btn-icon btn-link btn-danger op-8">
+                  <i class="fas fa-ban"></i>
+                </button>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-head-row card-tools-still-right">
+              <div class="card-title">{% trans "Historique des Paiements" %}</div>
+              <div class="card-tools">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-icon btn-clean me-0"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-ellipsis-h"></i>
+                  </button>
+                  <div
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <a class="dropdown-item" href="#">{% trans "Action" %}</a>
+                    <a class="dropdown-item" href="#">{% trans "Another action" %}</a>
+                    <a class="dropdown-item" href="#">{% trans "Something else here" %}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <!-- Tableau des paiements -->
+              <table class="table align-items-center mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">{% trans "Référence" %}</th>
+                    <th scope="col" class="text-end">{% trans "Date et Heure" %}</th>
+                    <th scope="col" class="text-end">{% trans "Montant" %}</th>
+                    <th scope="col" class="text-end">{% trans "Statut" %}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for paiement in derniers_paiements %}
+                  <tr>
+                    <th scope="row">
+                      <button
+                        class="btn btn-icon btn-round btn-success btn-sm me-2"
+                      >
+                        <i class="fa fa-check"></i>
+                      </button>
+                      {% trans "Paiement" %} #{{ paiement.reference }}
+                    </th>
+                    <td class="text-end">{{ paiement.date_paiement }}</td>
+                    <td class="text-end">{{ paiement.montant }} €</td>
+                    <td class="text-end">
+                      <span class="badge 
+                        {% if paiement.statut == 'P' %}badge-success{% elif paiement.statut == 'N' %}badge-danger{% else %}badge-warning{% endif %}">
+                        {{ paiement.get_statut_display }}
+                      </span>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Répartition des élèves par niveau et par sexe -->
+    <div class="row mt-4">
+      <!-- Graphique des élèves par niveau -->
+      <div class="col-md-6">
+        <div class="card card-round">
+          <div class="card-body">
+            <div class="card-head-row card-tools-still-right">
+              <div class="card-title">{% trans "Répartition des élèves par niveau" %}</div>
+              <div class="card-tools">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-icon btn-clean me-0"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-ellipsis-h"></i>
+                  </button>
+                  <div
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <a class="dropdown-item" href="#">{% trans "Action" %}</a>
+                    <a class="dropdown-item" href="#">{% trans "Another action" %}</a>
+                    <a class="dropdown-item" href="#">{% trans "Something else here" %}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="niveauPieChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Graphique des élèves par sexe -->
+      <div class="col-md-6">
+        <div class="card card-round">
+          <div class="card-body">
+            <div class="card-head-row card-tools-still-right">
+              <div class="card-title">{% trans "Répartition des élèves par sexe" %}</div>
+              <div class="card-tools">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-icon btn-clean me-0"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-ellipsis-h"></i>
+                  </button>
+                  <div
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <a class="dropdown-item" href="#">{% trans "Action" %}</a>
+                    <a class="dropdown-item" href="#">{% trans "Another action" %}</a>
+                    <a class="dropdown-item" href="#">{% trans "Something else here" %}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="sexePieChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script pour le graphique des niveaux -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  var ctxNiveau = document.getElementById('niveauPieChart').getContext('2d');
+  var niveauPieChart = new Chart(ctxNiveau, {
+    type: 'pie',
+    data: {
+      labels: [{% for niveau in niveaux %}"{{ niveau.nom }}",{% endfor %}],
+      datasets: [{
+        data: [{% for niveau in niveaux %}{{ niveau.nombre_eleves }},{% endfor %}],
+        backgroundColor: ['#1d7af3', '#f3545d', '#fdaf4b', '#4bc0c0', '#9966ff'],
+        borderWidth: 0,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+        position: 'bottom',
+        labels: {
+          fontColor: 'rgb(154, 154, 154)',
+          fontSize: 11,
+          usePointStyle: true,
+          padding: 20,
+        },
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem, data) {
+            var label = data.labels[tooltipItem.index] || '';
+            var value = data.datasets[0].data[tooltipItem.index] || 0;
+            var pourcentage = (value / {{ total_eleves_niveaux }}) * 100;
+            return label + ': ' + value + ' (' + pourcentage.toFixed(2) + '%)';
+          }
+        }
+      },
+    },
+  });
+</script>
+
+<!-- Script pour le graphique des sexes -->
+<script>
+  var ctxSexe = document.getElementById('sexePieChart').getContext('2d');
+  var sexePieChart = new Chart(ctxSexe, {
+    type: 'pie',
+    data: {
+      labels: ['{% trans "Hommes" %}', '{% trans "Femmes" %}'],
+      datasets: [{
+        data: [{{ pourcentage_hommes|floatformat:2 }}, {{ pourcentage_femmes|floatformat:2 }}],
+        backgroundColor: ['#1d7af3', '#f3545d'],
+        borderWidth: 0,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+        position: 'bottom',
+        labels: {
+          fontColor: 'rgb(154, 154, 154)',
+          fontSize: 11,
+          usePointStyle: true,
+          padding: 20,
+        },
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem, data) {
+            var label = data.labels[tooltipItem.index] || '';
+            var value = data.datasets[0].data[tooltipItem.index] || 0;
+            return label + ': ' + value.toFixed(2) + '%';
+          }
+        }
+      },
+    },
+  });
+</script>
+
+{% endblock content %}

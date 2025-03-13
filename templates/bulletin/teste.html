@@ -1,0 +1,132 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">
+        Notes de Compositions - Classe : {{ classe.nom }}
+      </h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="#">
+            <i class="icon-home"></i>
+          </a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#">Élèves</a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#">{{ classe.nom }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        {% for bulletin in bulletins %}
+        <div class="card mb-4">
+          <div class="card-header">
+            <h4 class="card-title">
+              Bulletin de {{ bulletin.eleve.nom }} {{ bulletin.eleve.prenom }}
+            </h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <tr>
+                  <th>Nom</th>
+                  <td>{{ bulletin.eleve.nom }}</td>
+                  <th>Prénom</th>
+                  <td>{{ bulletin.eleve.prenom }}</td>
+                </tr>
+                <tr>
+                  <th>Classe</th>
+                  <td>{{ bulletin.eleve.classe.nom }}</td>
+                  <th>Moyenne Générale</th>
+                  <td>{{ bulletin.moyenne_generale }}</td>
+                </tr>
+                <tr>
+                  <th>Rang</th>
+                  <td>{{ bulletin.rang }}</td>
+                  <th>Semestre</th>
+                  <td>{{ bulletin.semestre.nom }}</td>
+                </tr>
+              </table>
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Matière</th>
+                    <th>Moyenne</th>
+                    <th>Coefficient</th>
+                    <th>Notes Devoirs</th>
+                    <th>Notes Composition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for matiere in bulletin.matieres %}
+                  <tr>
+                    <td>{{ matiere.matiere }}</td>
+                    <td>{{ matiere.moyenne }}</td>
+                    <td>{{ matiere.coefficient }}</td>
+                    <td>{{ matiere.notes_devoirs|join:", " }}</td>
+                    <td>{{ matiere.notes_composition|join:", " }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .table-responsive {
+    overflow-x: hidden;
+  }
+  table {
+    width: 100%;
+    table-layout: fixed;
+    white-space: nowrap;
+  }
+  th,
+  td {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .table {
+    border: 1px solid #333; /* Bordure noir clair */
+  }
+  .table th,
+  .table td {
+    border: 1px solid #333 !important; /* Bordure noir clair */
+  }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("table").DataTable({
+      pageLength: 10,
+      autoWidth: false,
+      responsive: true,
+      scrollX: false,
+      columnDefs: [
+        { width: "150px", targets: 0 },
+        { width: "100px", targets: "_all" },
+      ],
+    });
+  });
+</script>
+
+{% endblock content %}

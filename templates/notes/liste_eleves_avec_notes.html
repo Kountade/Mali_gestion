@@ -1,0 +1,111 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">
+        Liste des élèves de la classe {{ classe.nom }}
+      </h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="#">
+            <i class="icon-home"></i>
+          </a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#">Élèves</a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#">{{ classe.nom }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <h4 class="card-title">Liste des élèves</h4>
+              <a href="#" class="btn btn-outline-primary ms-auto">
+                <i class="bi bi-plus-square"></i> Ajouter un élève
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table
+                id="eleves-table"
+                class="display table table-striped table-hover"
+              >
+                <thead>
+                  <tr>
+                    <th style="width: 150px">Élève</th>
+                    {% for matiere in matieres %}
+                    <th style="width: 100px">{{ matiere.nom }}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for eleve_data in data %}
+                  <tr>
+                    <td>
+                      {{ eleve_data.eleve.nom }} {{ eleve_data.eleve.prenom }}
+                    </td>
+                    {% for note in eleve_data.notes_devoirs %}
+                    <td>{{ note.notes_devoirs }}</td>
+                    {% endfor %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Styles CSS pour supprimer la barre de défilement horizontale -->
+<style>
+  .table-responsive {
+    overflow-x: hidden; /* Supprime le défilement horizontal */
+  }
+  table {
+    width: 100%;
+    table-layout: fixed; /* Force un ajustement des colonnes */
+    white-space: nowrap; /* Évite le retour à la ligne dans les cellules */
+  }
+  th,
+  td {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Tronque le texte trop long */
+  }
+</style>
+
+<!-- JS pour DataTable avec filtres automatiques -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#eleves-table").DataTable({
+      pageLength: 10,
+      autoWidth: false,
+      responsive: true,
+      scrollX: false,
+      columnDefs: [
+        { width: "150px", targets: 0 }, // Réduit la largeur de la colonne "Élève"
+        { width: "100px", targets: "_all" }, // Réduit la largeur des autres colonnes
+      ],
+    });
+  });
+</script>
+
+{% endblock content %}

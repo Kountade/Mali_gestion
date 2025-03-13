@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bulletin de Notes</title>
+    <style>
+      body {
+        font-family: "Times New Roman", Times, serif;
+        color: #333;
+        line-height: 1.6;
+        margin: 20px;
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .bulletin-container {
+        width: 100%;
+        max-width: 700px;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        position: relative;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .header-left,
+      .header-right {
+        text-align: left;
+      }
+      .header-center {
+        text-align: center;
+        flex-grow: 1;
+      }
+      .header h1,
+      .header h2 {
+        margin: 5px 0;
+      }
+      .student-info table,
+      .grades-table,
+      .footer table,
+      .appreciations-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .student-info td,
+      .grades-table th,
+      .grades-table td,
+      .footer td,
+      .appreciations-table td {
+        padding: 5px;
+        border: 1px solid #000;
+        text-align: center;
+      }
+      .grades-table {
+        margin-bottom: 20px;
+      }
+      .footer {
+        margin-top: 20px;
+        text-align: center;
+      }
+      .observations textarea {
+        width: 100%;
+        height: 80px;
+        border: 1px solid #000;
+        padding: 5px;
+      }
+      .export-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 20px;
+        width: 100%;
+      }
+      .export-button:hover {
+        background-color: #0056b3;
+      }
+
+      /* Style spécifique pour l'export PDF */
+      .pdf-export .bulletin-container {
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        background: white; /* Fond blanc */
+      }
+      .pdf-export .student-info table,
+      .pdf-export .grades-table,
+      .pdf-export .footer table,
+      .pdf-export .appreciations-table {
+        border: 1px solid #000; /* Bordures des tableaux */
+      }
+      .pdf-export .student-info td,
+      .pdf-export .grades-table th,
+      .pdf-export .grades-table td,
+      .pdf-export .footer td,
+      .pdf-export .appreciations-table td {
+        border: 1px solid #000; /* Bordures des cellules */
+        padding: 5px;
+      }
+      .pdf-export .export-button {
+        display: none; /* Masquer le bouton d'export dans le PDF */
+      }
+    </style>
+    <!-- Inclure jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  </head>
+  <body>
+    {% for bulletin in bulletins %}
+    <div class="bulletin-container" id="bulletin-{{ forloop.counter }}">
+      <div class="header">
+        <div class="header-left">
+          <h3>I-A ZIGUINCHOR</h3>
+          <h3>{{ eleve.annee_scolaire.reference }}</h3>
+        </div>
+        <div class="header-center">
+          <h2>BULLETIN DE NOTES</h2>
+          <h2>{{ bulletin.semestre.nom }}</h2>
+        </div>
+        <div class="header-right">
+          <h3>C E M</h3>
+          <h3>Cem Arfang Bessire Sonko</h3>
+        </div>
+      </div>
+
+      <div class="student-info">
+        <table>
+          <tr>
+            <td>Prénoms: {{ eleve.prenom }}</td>
+            <td>Nom: {{ eleve.nom }}</td>
+          </tr>
+          <tr>
+            <td>Né(e) le: {{ eleve.date_naissance }}</td>
+            <td>à: {{ eleve.lieu_naissance }}</td>
+          </tr>
+          <tr>
+            <td>Classe: {{ classe.nom }}</td>
+            <td>Matricule: {{ eleve.matricule }}</td>
+          </tr>
+          <tr>
+            <td>Nbre d'élèves: {{ nombre_eleves_classe }}</td>
+            <td>Classe Redoublée: 0</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="semestre-section">
+        <br />
+
+        <table class="grades-table">
+          <thead>
+            <tr>
+              <th>DISCIPLINES</th>
+              <th>Devoir</th>
+              <th>Comp</th>
+              <th>Moy/20</th>
+              <th>Coef</th>
+              <th>Moy x</th>
+              <th>T.H</th>
+              <th>Rang</th>
+              <th>Appréciations</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for matiere in bulletin.matieres %}
+            <tr>
+              <td>{{ matiere.matiere }}</td>
+              <td>{{ matiere.devoir|floatformat:2 }}</td>
+              <td>{{ matiere.composition|floatformat:2 }}</td>
+              <td>{{ matiere.moyenne|floatformat:2 }}</td>
+              <td>{{ matiere.coefficient }}</td>
+              <td>{{ matiere.moyenne_absolue|floatformat:2 }}</td>
+              <td>TH</td>
+              <td>{{ matiere.rang }}</td>
+              <td>{{ matiere.appreciation }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="footer">
+          <table>
+            <tr>
+              <td>Moyenne: {{ bulletin.moyenne_generale }} /20</td>
+              <td>Rang: {{ bulletin.rang }}</td>
+              <td>Total: {{ bulletin.total_moyenne_absolue|floatformat:2 }}</td>
+              <td>T Coef: {{ bulletin.total_coefficients }}</td>
+              <td>Retards: {{ bulletin.nombre_retards }}</td>
+              <td>Absences: {{ bulletin.nombre_absences }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="appreciations">
+        <h3>Appréciations du Directeur</h3>
+        <table class="appreciations-table">
+          <tr>
+            <td><input type="checkbox" /> Félicitations</td>
+            <td><input type="checkbox" /> Tableau d'honneur</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" /> Peut mieux faire</td>
+            <td><input type="checkbox" /> Encouragements</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="observations">
+        <h3>Observations du Conseil des Professeurs</h3>
+        <textarea></textarea>
+      </div>
+
+      <!-- Bouton d'export pour ce bulletin -->
+      <button
+        class="export-button"
+        onclick="exportToPDF('bulletin-{{ forloop.counter }}')"
+      >
+        Exporter ce bulletin en PDF
+      </button>
+    </div>
+    {% endfor %}
+
+    <script>
+      // Fonction pour exporter un bulletin en PDF
+      function exportToPDF(containerId) {
+        const element = document.getElementById(containerId);
+
+        // Ajouter une classe spécifique pour l'export PDF
+        element.classList.add("pdf-export");
+
+        html2canvas(element, {
+          scale: 2, // Augmenter la résolution pour un PDF de meilleure qualité
+          useCORS: true, // Permettre le chargement des images externes
+        }).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          const pdf = new jspdf.jsPDF("p", "mm", "a4");
+          const imgWidth = 210; // Largeur A4 en mm
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+          pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+          pdf.save(`bulletin-${containerId}.pdf`);
+
+          // Retirer la classe spécifique après l'export
+          element.classList.remove("pdf-export");
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">Ajouter une Note</h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}"><i class="icon-home"></i></a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item">
+          <a href="{% url 'liste_notes' %}">Notes</a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item active">Ajouter</li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="card mb-4 shadow-lg" style="border: 2px solid #007bff">
+          <div
+            class="card-header text-white fw-bold text-center"
+            style="background-color: #007bff"
+          >
+            Formulaire d'Ajout d'une Note
+          </div>
+          <div class="card-body">
+            <form method="POST" class="row g-3">
+              {% csrf_token %}
+
+              <!-- Champ Devoir -->
+              <div class="col-md-6">
+                <label for="id_devoir" class="form-label fw-bold">Devoir</label>
+                {{ form.devoir }}
+                {% for error in form.devoir.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Champ Élève -->
+              <div class="col-md-6">
+                <label for="id_eleve" class="form-label fw-bold">Élève</label>
+                {{ form.eleve }}
+                {% for error in form.eleve.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Champ Note -->
+              <div class="col-md-12">
+                <label for="id_note" class="form-label fw-bold">Note</label>
+                {{ form.note }}
+                {% for error in form.note.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+                <small class="form-text text-muted">La note doit être comprise entre 0 et 20.</small>
+              </div>
+
+              <!-- Boutons de soumission -->
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg">
+                  <i class="bi bi-check-circle"></i> Enregistrer
+                </button>
+                <button type="reset" class="btn btn-secondary btn-lg">
+                  <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
+                </button>
+                <a
+                  href="{% url 'liste_notes' %}"
+                  class="btn btn-primary btn-lg"
+                >
+                  <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

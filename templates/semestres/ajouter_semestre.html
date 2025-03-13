@@ -1,0 +1,99 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">Ajouter un Semestre</h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}"><i class="icon-home"></i></a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item">
+          <a href="{% url 'liste_semestres' %}">Semestres</a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item active">Ajouter</li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <div class="card mb-4" style="border: 2px solid #007bff">
+          <div
+            class="card-header text-white fw-bold text-center"
+            style="background-color: #007bff"
+          >
+            Formulaire d'Ajout d'un Semestre
+          </div>
+          <div class="card-body">
+            <form method="POST" class="row g-3">
+              {% csrf_token %}
+
+              <div class="col-md-6">
+                <label for="id_reference" class="form-label">Référence</label>
+                {{ form.reference }} {% for error in form.reference.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_nom" class="form-label">Nom du semestre</label>
+                {{ form.nom }} {% for error in form.nom.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_annee_scolaire" class="form-label"
+                  >Année Scolaire</label
+                >
+                {{ form.annee_scolaire }} {% for error in form.annee_scolaire.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_debut" class="form-label">Date de Début</label>
+                {{ form.debut }} {% for error in form.debut.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_fin" class="form-label">Date de Fin</label>
+                {{ form.fin }} {% for error in form.fin.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-12">
+                <label for="id_description" class="form-label"
+                  >Description</label
+                >
+                {{ form.description }} {% for error in form.description.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg">
+                  <i class="bi bi-check-circle"></i> Enregistrer
+                </button>
+                <button type="reset" class="btn btn-secondary btn-lg">
+                  <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
+                </button>
+                <a
+                  href="{% url 'liste_semestres' %}"
+                  class="btn btn-primary btn-lg"
+                >
+                  <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

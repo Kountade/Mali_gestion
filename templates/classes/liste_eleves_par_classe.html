@@ -1,0 +1,149 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">
+        Liste des Élèves de la Classe : {{ classe.nom }}
+      </h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}">
+            <i class="icon-home"></i>
+          </a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'liste_classes' %}">Classes</a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'liste_eleves_par_classe' classe.id %}"
+            >{{ classe.nom }}</a
+          >
+        </li>
+      </ul>
+    </div>
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <h4 class="card-title">Liste des Élèves</h4>
+              <a href="" class="btn btn-outline-primary ms-auto">
+                <i class="bi bi-plus-square"></i> Ajouter un Élève
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table
+                id="eleves-table"
+                class="display table table-striped table-hover"
+              >
+                <thead>
+                  <tr>
+                    <th style="width: 150px">Nom</th>
+                    <th style="width: 150px">Prénom</th>
+                    <th style="width: 100px">Date de Naissance</th>
+                    <th style="width: 100px">Sexe</th>
+                    <th style="width: 200px">Adresse</th>
+                    <th style="width: 100px">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for eleve in eleves %}
+                  <tr>
+                    <td>{{ eleve.nom }}</td>
+                    <td>{{ eleve.prenom }}</td>
+                    <td>{{ eleve.date_naissance|date:"d/m/Y" }}</td>
+                    <td>{{ eleve.get_sexe_display }}</td>
+                    <td>{{ eleve.adresse|default:"-" }}</td>
+                    <td>
+                      <a
+                        href=""
+                        class="btn btn-sm btn-warning"
+                        title="Modifier"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </a>
+                      <a
+                        href=""
+                        class="btn btn-sm btn-danger"
+                        title="Supprimer"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Styles CSS pour supprimer la barre de défilement horizontale -->
+<style>
+  .table-responsive {
+    overflow-x: hidden; /* Supprime le défilement horizontal */
+  }
+  table {
+    width: 100%;
+    table-layout: fixed; /* Force un ajustement des colonnes */
+    white-space: nowrap; /* Évite le retour à la ligne dans les cellules */
+  }
+  th,
+  td {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Tronque le texte trop long */
+  }
+</style>
+
+<!-- JS pour DataTable avec filtres automatiques -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#eleves-table").DataTable({
+      pageLength: 10,
+      autoWidth: false,
+      responsive: true,
+      scrollX: false,
+      columnDefs: [
+        { width: "150px", targets: [0, 1] }, // Réduit la largeur des colonnes "Nom" et "Prénom"
+        { width: "100px", targets: [2, 3] }, // Réduit la largeur des colonnes "Date de Naissance" et "Sexe"
+        { width: "200px", targets: 4 }, // Largeur pour la colonne "Adresse"
+        { width: "100px", targets: 5 }, // Largeur pour la colonne "Actions"
+      ],
+    });
+  });
+</script>
+
+{% endblock content %}

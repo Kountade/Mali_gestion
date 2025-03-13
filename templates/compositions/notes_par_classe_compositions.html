@@ -1,0 +1,108 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">
+        Notes de Compositions - Classe : {{ classe.nom }}
+      </h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="#">
+            <i class="icon-home"></i>
+          </a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#">Élèves</a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#">{{ classe.nom }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Boucle pour chaque semestre -->
+        {% for semestre_data in resultats_par_semestre %}
+        <div class="card mb-4">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <h4 class="card-title">
+                Semestre : {{ semestre_data.semestre.nom }}
+              </h4>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="display table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th style="width: 150px">Élève</th>
+                    <th style="width: 100px">Matière</th>
+                    <th style="width: 100px">Date</th>
+                    <th style="width: 100px">Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for resultat in semestre_data.resultats %} {% for note in resultat.notes_compositions %}
+                  <tr>
+                    <td>{{ resultat.nom }} {{ resultat.prenom }}</td>
+                    <td>{{ note.matiere_nom }}</td>
+                    <td>{{ note.date_composition }}</td>
+                    <td>{{ note.note }}</td>
+                  </tr>
+                  {% endfor %} {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Styles CSS pour supprimer la barre de défilement horizontale -->
+<style>
+  .table-responsive {
+    overflow-x: hidden; /* Supprime le défilement horizontal */
+  }
+  table {
+    width: 100%;
+    table-layout: fixed; /* Force un ajustement des colonnes */
+    white-space: nowrap; /* Évite le retour à la ligne dans les cellules */
+  }
+  th,
+  td {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Tronque le texte trop long */
+  }
+</style>
+
+<!-- JS pour DataTable avec filtres automatiques -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("table").DataTable({
+      pageLength: 10,
+      autoWidth: false,
+      responsive: true,
+      scrollX: false,
+      columnDefs: [
+        { width: "150px", targets: 0 }, // Réduit la largeur de la colonne "Élève"
+        { width: "100px", targets: "_all" }, // Réduit la largeur des autres colonnes
+      ],
+    });
+  });
+</script>
+
+{% endblock content %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %} 
+{% load  i18n %}
+<!-- Ajoutez i18n ici -->
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">{% trans "Ajouter un Niveau" %}</h3>
+      <!-- Traduire le titre -->
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}"><i class="icon-home"></i></a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item">
+          <a href="{% url 'liste_niveaux' %}">{% trans "Niveaux" %}</a>
+          <!-- Traduire le texte -->
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item active">{% trans "Ajouter" %}</li>
+        <!-- Traduire le texte -->
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="card mb-4 shadow-lg" style="border: 2px solid #007bff">
+          <div
+            class="card-header text-white fw-bold text-center"
+            style="background-color: #007bff"
+          >
+            {% trans "Formulaire d'Ajout d'un Niveau" %}
+            <!-- Traduire le texte -->
+          </div>
+          <div class="card-body">
+            <form method="POST" class="row g-3">
+              {% csrf_token %}
+
+              <div class="col-md-6">
+                <label for="id_nom" class="form-label fw-bold">
+                  {% trans "Nom du Niveau" %}
+                  <!-- Traduire le label -->
+                </label>
+                {{ form.nom }} {% for error in form.nom.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_ordre" class="form-label fw-bold">
+                  {% trans "Ordre" %}
+                  <!-- Traduire le label -->
+                </label>
+                {{ form.ordre }} {% for error in form.ordre.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-12">
+                <label for="id_description" class="form-label fw-bold">
+                  {% trans "Description" %}
+                  <!-- Traduire le label -->
+                </label>
+                {{ form.description }} {% for error in form.description.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg">
+                  <i class="bi bi-check-circle"></i> {% trans "Enregistrer" %}
+                  <!-- Traduire le texte -->
+                </button>
+                <button type="reset" class="btn btn-secondary btn-lg">
+                  <i class="bi bi-arrow-counterclockwise"></i> {% trans "Réinitialiser" %}
+                  <!-- Traduire le texte -->
+                </button>
+                <a
+                  href="{% url 'liste_niveaux' %}"
+                  class="btn btn-primary btn-lg"
+                >
+                  <i class="bi bi-arrow-left-circle"></i> {% trans "Retour à la liste" %}
+                  <!-- Traduire le texte -->
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

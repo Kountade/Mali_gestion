@@ -1,0 +1,130 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">Modifier une Matière</h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}"><i class="icon-home"></i></a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item">
+          <a href="{% url 'liste_matieres' %}">Matières</a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item active">Modifier</li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="card mb-4 shadow-lg" style="border: 2px solid #007bff">
+          <div
+            class="card-header text-white fw-bold text-center"
+            style="background-color: #007bff"
+          >
+            Formulaire de Modification d'une Matière
+          </div>
+          <div class="card-body">
+            <form method="POST" enctype="multipart/form-data" class="row g-3">
+              {% csrf_token %}
+
+              <div class="col-md-6">
+                <label for="id_reference" class="form-label fw-bold"
+                  >Référence</label
+                >
+                <input
+                  type="text"
+                  id="id_reference"
+                  name="reference"
+                  class="form-control"
+                  value="{{ form.instance.reference }}"
+                  readonly
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_nom" class="form-label fw-bold"
+                  >Nom de la Matière</label
+                >
+                {{ form.nom }} {% for error in form.nom.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_coefficient" class="form-label fw-bold"
+                  >Coefficient</label
+                >
+                {{ form.coefficient }} {% for error in form.coefficient.errors
+                %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_description" class="form-label fw-bold"
+                  >Description</label
+                >
+                {{ form.description }} {% for error in form.description.errors
+                %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-12 text-center">
+                <label for="id_image" class="form-label fw-bold"
+                  >Photo de la Matière</label
+                >
+                <div class="mb-3">
+                  <input
+                    type="file"
+                    id="id_image"
+                    name="image"
+                    class="form-control"
+                    accept="image/*"
+                    onchange="previewImage(event)"
+                  />
+                </div>
+                <img
+                  id="imagePreview"
+                  src="{{ form.instance.image.url }}"
+                  alt="Prévisualisation"
+                  class="img-thumbnail shadow-lg"
+                  width="150px"
+                />
+                {% for error in form.image.errors %}
+                <div class="alert alert-danger mt-2">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg">
+                  <i class="bi bi-check-circle"></i> Mettre à jour
+                </button>
+                <a
+                  href="{% url 'liste_matieres' %}"
+                  class="btn btn-primary btn-lg"
+                >
+                  <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var output = document.getElementById("imagePreview");
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+</script>
+{% endblock content %}

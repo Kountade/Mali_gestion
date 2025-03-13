@@ -1,0 +1,75 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3 text-primary">Calendrier des cours</h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}"><i class="icon-home text-primary"></i></a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right text-primary"></i></li>
+        <li class="nav-item">
+          <a href="{% url 'calendrier' %}" class="text-primary">Calendrier</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card mb-4 shadow-lg" style="border: 2px solid #007bff">
+          <div
+            class="card-header text-white fw-bold text-center"
+            style="background-color: #007bff"
+          >
+            Calendrier des cours
+          </div>
+          <div class="card-body" style="background-color: #f8f9fa">
+            <div id="calendar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Inclure FullCalendar CSS et JS -->
+<link
+  href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.css"
+  rel="stylesheet"
+/>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/locales-all.min.js"></script>
+
+<style>
+  /* Style des événements en carte */
+  .fc-event {
+    background-color: #cce5ff !important;
+    color: #000 !important;
+    border: 1px solid #007bff !important;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var calendarEl = document.getElementById("calendar");
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      locale: "fr",
+      events: "/calendrier-cours/",
+      eventClick: function (info) {
+        alert(
+          "📚 Cours: " +
+            info.event.title +
+            "\n" +
+            "👨‍🏫 " +
+            info.event.extendedProps.description
+        );
+      },
+    });
+    calendar.render();
+  });
+</script>
+{% endblock content %}

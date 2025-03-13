@@ -1,0 +1,114 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">Modifier un Paiement</h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="{% url 'home' %}"><i class="icon-home"></i></a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item">
+          <a href="{% url 'liste_paiements' %}">Paiements</a>
+        </li>
+        <li class="separator"><i class="icon-arrow-right"></i></li>
+        <li class="nav-item active">Modifier</li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <div class="card mb-4" style="border: 2px solid #007bff">
+          <div
+            class="card-header text-white fw-bold text-center"
+            style="background-color: #007bff"
+          >
+            Formulaire de Modification d'un Paiement
+          </div>
+          <div class="card-body">
+            <form method="POST" class="row g-3">
+              {% csrf_token %}
+
+              <!-- Élève -->
+              <div class="col-md-6">
+                <label for="id_eleve" class="form-label">Élève</label>
+                {{ form.eleve }} {% for error in form.eleve.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Date de Paiement -->
+              <div class="col-md-6">
+                <label for="id_date_paiement" class="form-label"
+                  >Date de Paiement</label
+                >
+                {{ form.date_paiement }} {% for error in form.date_paiement.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Montant -->
+              <div class="col-md-6">
+                <label for="id_montant" class="form-label">Montant</label>
+                {{ form.montant }} {% for error in form.montant.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Statut -->
+              <div class="col-md-6">
+                <label for="id_statut" class="form-label">Statut</label>
+                {{ form.statut }} {% for error in form.statut.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Plan de Paiement -->
+              <div class="col-md-6">
+                <label for="id_plan_paiement" class="form-label"
+                  >Plan de Paiement</label
+                >
+                {{ form.plan_paiement }} {% for error in form.plan_paiement.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Mois/Année -->
+              <div class="col-md-6">
+                <label for="id_mois_annee" class="form-label">Mois/Année</label>
+                {{ form.mois_annee }} {% for error in form.mois_annee.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Commentaires -->
+              <div class="col-md-12">
+                <label for="id_commentaires" class="form-label"
+                  >Commentaires</label
+                >
+                {{ form.commentaires }} {% for error in form.commentaires.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <!-- Boutons -->
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg">
+                  <i class="bi bi-check-circle"></i> Enregistrer les
+                  modifications
+                </button>
+                <a
+                  href="{% url 'liste_paiements' %}"
+                  class="btn btn-secondary btn-lg"
+                >
+                  <i class="bi bi-arrow-left-circle"></i> Annuler
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

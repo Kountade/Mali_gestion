@@ -1,0 +1,149 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container text-center">
+  <!-- Carte contenant le menu -->
+  <div
+    class="card shadow-lg border-0 mb-4"
+    style="background: linear-gradient(135deg, #ff758c, #ff7eb3); color: white"
+  >
+    <div class="card-body">
+      <h4 class="fw-bold mb-3">Navigation</h4>
+      <div id="menu" class="d-flex flex-wrap justify-content-center">
+        <button
+          class="btn btn-light btn-lg flex-grow-1 mx-2 my-2"
+          onclick="loadPage('accueil')"
+        >
+          <i class="fas fa-home"></i> Accueil
+        </button>
+
+        <!-- Bouton Produits avec sous-menu -->
+        <div class="position-relative">
+          <button
+            class="btn btn-light btn-lg flex-grow-1 mx-2 my-2"
+            onclick="toggleSubMenu()"
+          >
+            <i class="fas fa-box-open"></i> Produits
+            <i class="fas fa-caret-down"></i>
+          </button>
+          <div id="submenu-produits" class="submenu d-none">
+            <button
+              class="btn btn-secondary btn-lg w-100 my-1"
+              onclick="loadPage('produit1')"
+            >
+              <i class="fas fa-laptop"></i> Produit 1
+            </button>
+            <button
+              class="btn btn-secondary btn-lg w-100 my-1"
+              onclick="loadPage('produit2')"
+            >
+              <i class="fas fa-mobile-alt"></i> Produit 2
+            </button>
+            <button
+              class="btn btn-secondary btn-lg w-100 my-1"
+              onclick="loadPage('produit3')"
+            >
+              <i class="fas fa-headphones"></i> Produit 3
+            </button>
+          </div>
+        </div>
+
+        <button
+          class="btn btn-light btn-lg flex-grow-1 mx-2 my-2"
+          onclick="loadPage('contact')"
+        >
+          <i class="fas fa-envelope"></i> Contact
+        </button>
+        <button
+          class="btn btn-light btn-lg flex-grow-1 mx-2 my-2"
+          onclick="loadPage('services')"
+        >
+          <i class="fas fa-cogs"></i> Services
+        </button>
+        <button
+          class="btn btn-light btn-lg flex-grow-1 mx-2 my-2"
+          onclick="loadPage('about')"
+        >
+          <i class="fas fa-info-circle"></i> À Propos
+        </button>
+        <button
+          class="btn btn-light btn-lg flex-grow-1 mx-2 my-2"
+          onclick="loadPage('help')"
+        >
+          <i class="fas fa-question-circle"></i> Aide
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenu qui change dynamiquement -->
+  <div id="content" class="p-4 border rounded shadow-sm bg-light">
+    <h2>Bienvenue !</h2>
+    <p>Cliquez sur un bouton pour afficher une page.</p>
+  </div>
+</div>
+
+<!-- Script JavaScript -->
+<script>
+  function loadPage(page) {
+    let content = document.getElementById("content");
+
+    if (page === "accueil") {
+      content.innerHTML = `<h2>Accueil</h2><p>Bienvenue sur notre site.</p>`;
+    } else if (page === "produit1") {
+      content.innerHTML = `<h2>Produit 1</h2><p>Détails du produit 1.</p>`;
+    } else if (page === "produit2") {
+      content.innerHTML = `<h2>Produit 2</h2><p>Détails du produit 2.</p>`;
+    } else if (page === "produit3") {
+      content.innerHTML = `<h2>Produit 3</h2><p>Détails du produit 3.</p>`;
+    } else if (page === "contact") {
+      content.innerHTML = `<h2>Contact</h2><p>Envoyez-nous un message.</p>`;
+    } else if (page === "services") {
+      content.innerHTML = `<h2>Nos Services</h2><p>Explorez nos services professionnels.</p>`;
+    } else if (page === "about") {
+      content.innerHTML = `<h2>À Propos</h2><p>Découvrez notre histoire et nos valeurs.</p>`;
+    } else if (page === "help") {
+      content.innerHTML = `<h2>Aide</h2><p>Trouvez des réponses à vos questions.</p>`;
+    }
+
+    // Ajoute une animation fluide
+    content.classList.add("fade-in");
+    setTimeout(() => content.classList.remove("fade-in"), 500);
+  }
+
+  function toggleSubMenu() {
+    let submenu = document.getElementById("submenu-produits");
+    submenu.classList.toggle("d-none");
+  }
+</script>
+
+<!-- Style CSS -->
+<style>
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Style du sous-menu */
+  .submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    z-index: 1000;
+  }
+</style>
+
+{% endblock content %}
