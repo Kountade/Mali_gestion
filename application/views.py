@@ -32,7 +32,13 @@ from django.utils.translation import activate
 from django.shortcuts import redirect
 from django.urls import reverse
 
+from django.shortcuts import render
 
+def custom_404_view(request, exception):
+    """
+    Vue personnalisée pour la page 404.
+    """
+    return render(request, '404.html', status=404)
 
 def home(request):
     # Récupérer toutes les années scolaires pour le filtre

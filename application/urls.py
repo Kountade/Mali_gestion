@@ -9,6 +9,7 @@ from .views import EleveInscriptionWizard, FORMS
 from .views import EleveModificationWizard, FORMS
 from . import views
 
+
 urlpatterns = [
    path("home", views.home, name="home"),
    
