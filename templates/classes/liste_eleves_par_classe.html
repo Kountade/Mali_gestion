@@ -54,6 +54,20 @@
               <a href="" class="btn btn-outline-primary ms-auto">
                 <i class="bi bi-plus-square"></i> Ajouter un Élève
               </a>
+
+              <!-- Bouton pour télécharger le PDF -->
+              <button
+                class="btn btn-outline-success ms-2"
+                onclick="downloadPDF()"
+              >
+                <i class="bi bi-file-earmark-pdf"></i> Exporter en PDF
+              </button>
+              <a
+                href="{% url 'liste_eleves_par_classe_pdf' classe.id %}"
+                class="btn btn-outline-primary ms-auto"
+              >
+                <i class="bi bi-plus-square"></i> PDF
+              </a>
             </div>
           </div>
           <div class="card-body">
@@ -124,6 +138,26 @@
     overflow: hidden;
     text-overflow: ellipsis; /* Tronque le texte trop long */
   }
+
+  /* Styles spécifiques pour l'export PDF */
+  .pdf-export {
+    background-color: white; /* Fond blanc */
+    padding: 10px; /* Espacement interne */
+  }
+  .pdf-export table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .pdf-export th,
+  .pdf-export td {
+    border: 1px solid #000; /* Bordures des cellules */
+    padding: 8px;
+    text-align: center;
+  }
+  .pdf-export th {
+    background-color: #f2f2f2; /* Fond des en-têtes */
+    font-weight: bold;
+  }
 </style>
 
 <!-- JS pour DataTable avec filtres automatiques -->
@@ -144,6 +178,36 @@
       ],
     });
   });
+</script>
+
+<!-- Inclure jsPDF et html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- Fonction pour générer le PDF -->
+<script>
+  function downloadPDF() {
+    const element = document.getElementById("eleves-table"); // Cibler uniquement la table
+
+    // Ajouter une classe spécifique pour l'export PDF
+    element.classList.add("pdf-export");
+
+    html2canvas(element, {
+      scale: 2, // Augmenter la résolution pour un PDF de meilleure qualité
+      useCORS: true, // Permettre le chargement des images externes
+    }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jspdf.jsPDF("l", "mm", "a4"); // Format A4 horizontal
+      const imgWidth = 297; // Largeur A4 en mm (format horizontal)
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save(`liste-eleves-{{ classe.nom }}.pdf`);
+
+      // Retirer la classe spécifique après l'export
+      element.classList.remove("pdf-export");
+    });
+  }
 </script>
 
 {% endblock content %}

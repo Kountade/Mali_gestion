@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liste des Élèves - {{ classe.nom }}</title>
+    <style>
+      body {
+        font-family: "Times New Roman", Times, serif;
+        color: #000; /* Texte noir */
+        line-height: 1.6;
+        margin: 0; /* Supprimer les marges pour utiliser toute la largeur */
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .liste-container {
+        width: 100%; /* Utiliser toute la largeur disponible */
+        background: white;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        position: relative;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .header-left,
+      .header-right {
+        text-align: left;
+      }
+      .header-center {
+        text-align: center;
+        flex-grow: 1;
+      }
+      .header h1,
+      .header h2 {
+        margin: 5px 0;
+        font-weight: bold; /* Texte en gras */
+        color: #000; /* Texte noir */
+      }
+      .student-info table,
+      .eleves-table,
+      .footer table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .student-info td,
+      .eleves-table th,
+      .eleves-table td,
+      .footer td {
+        padding: 8px; /* Augmenter le padding pour une meilleure lisibilité */
+        border: 1px solid #000;
+        text-align: center;
+        color: #000; /* Texte noir */
+        font-weight: normal; /* Texte normal (non gras) */
+      }
+      .eleves-table th {
+        font-weight: bold; /* En-têtes de tableau en gras */
+      }
+      .eleves-table {
+        margin-bottom: 20px;
+      }
+      .footer {
+        margin-top: 20px;
+        text-align: center;
+      }
+      .export-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 20px;
+        width: 100%;
+      }
+      .export-button:hover {
+        background-color: #0056b3;
+      }
+
+      /* Style spécifique pour l'export PDF */
+      .pdf-export .liste-container {
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        background: white; /* Fond blanc */
+      }
+      .pdf-export .student-info table,
+      .pdf-export .eleves-table,
+      .pdf-export .footer table {
+        border: 1px solid #000; /* Bordures des tableaux */
+      }
+      .pdf-export .student-info td,
+      .pdf-export .eleves-table th,
+      .pdf-export .eleves-table td,
+      .pdf-export .footer td {
+        border: 1px solid #000; /* Bordures des cellules */
+        padding: 8px;
+        color: #000; /* Texte noir */
+        font-weight: normal; /* Texte normal (non gras) */
+      }
+      .pdf-export .eleves-table th {
+        font-weight: bold; /* En-têtes de tableau en gras */
+      }
+      .pdf-export .export-button {
+        display: none; /* Masquer le bouton d'export dans le PDF */
+      }
+    </style>
+    <!-- Inclure jsPDF et html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  </head>
+  <body>
+    <div class="liste-container" id="liste-eleves">
+      <div class="header">
+        <div class="header-left">
+          <h3>I-A ZIGUINCHOR</h3>
+          <h3>{{ classe.annee_scolaire.reference }}</h3>
+        </div>
+        <div class="header-center">
+          <h2>LISTE DES ÉLÈVES</h2>
+          <h2>{{ classe.nom }}</h2>
+        </div>
+        <div class="header-right">
+          <h3>C E M</h3>
+          <h3>Cem Arfang Bessire Sonko</h3>
+        </div>
+      </div>
+
+      <div class="student-info">
+        <table>
+          <tr>
+            <td>Année Scolaire: {{ classe.annee_scolaire.reference }}</td>
+            <td>Classe: {{ classe.nom }}</td>
+          </tr>
+          <tr>
+            <td>Nombre d'élèves: {{ eleves|length }}</td>
+            <td>Date: {% now "d/m/Y" %}</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="semestre-section">
+        <br />
+
+        <table class="eleves-table">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Matricule</th>
+              <th>Prénom</th>
+              <th>Nom</th>
+              <th>Date de Naissance</th>
+              <th>Lieu de Naissance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for eleve in eleves %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ eleve.matricule }}</td>
+              <td>{{ eleve.prenom }}</td>
+              <td>{{ eleve.nom }}</td>
+              <td>{{ eleve.date_naissance|date:"d/m/Y" }}</td>
+              <td>{{ eleve.lieu_naissance }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="footer">
+        <table>
+          <tr>
+            <td>Total Élèves: {{ eleves|length }}</td>
+            <td>Signature du Directeur: ___________________</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Bouton d'export pour cette liste -->
+      <button class="export-button" onclick="exportToPDF('liste-eleves')">
+        Exporter cette liste en PDF
+      </button>
+    </div>
+
+    <script>
+      // Fonction pour exporter la liste en PDF
+      function exportToPDF(containerId) {
+        const element = document.getElementById(containerId);
+
+        // Ajouter une classe spécifique pour l'export PDF
+        element.classList.add("pdf-export");
+
+        html2canvas(element, {
+          scale: 2, // Augmenter la résolution pour un PDF de meilleure qualité
+          useCORS: true, // Permettre le chargement des images externes
+          logging: true, // Activer les logs pour le débogage
+          letterRendering: true, // Améliorer le rendu des textes
+        }).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          const pdf = new jspdf.jsPDF("l", "mm", "a4"); // Format A4 horizontal
+          const imgWidth = 297; // Largeur A4 en mm (format horizontal)
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+          pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+          pdf.save(`liste-eleves-{{ classe.nom }}.pdf`);
+
+          // Retirer la classe spécifique après l'export
+          element.classList.remove("pdf-export");
+        });
+      }
+    </script>
+  </body>
+</html>

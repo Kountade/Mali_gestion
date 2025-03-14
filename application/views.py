@@ -500,6 +500,43 @@ def supprimer_classe(request, classe_id):
     return render(request, 'classes/supprimer_classe.html', {'classe': classe})
 
 
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from .models import Classe, Eleve
+
+def liste_eleves_par_classe(request, classe_id):
+    # Récupérer la classe spécifique
+    classe = get_object_or_404(Classe, id=classe_id)
+    
+    # Récupérer tous les élèves de cette classe
+    eleves = Eleve.objects.filter(classe=classe)
+    
+    # Passer les données au template
+    return render(request, 'classes/liste_eleves_par_classe.html', {
+        'classe': classe,
+        'eleves': eleves,
+    })
+
+def liste_eleves_par_classe_pdf(request, classe_id):
+    # Récupérer la classe spécifique
+    classe = get_object_or_404(Classe, id=classe_id)
+    
+    # Récupérer tous les élèves de cette classe
+    eleves = Eleve.objects.filter(classe=classe)
+    
+    # Rendre le template HTML en chaîne de caractères
+    html_string = render_to_string('classes/liste_eleves_par_classe_pdf.html', {
+        'classe': classe,
+        'eleves': eleves,
+    })
+    
+    # Retourner la réponse HTML pour le PDF
+    return HttpResponse(html_string)
+
+
+
+
 
 
 from django.contrib import messages

@@ -59,8 +59,9 @@ urlpatterns = [
     path('classes/modifier/<int:classe_id>/',  views.modifier_classe, name='modifier_classe'),
     path('classes/supprimer/<int:classe_id>/',  views.supprimer_classe, name='supprimer_classe'),
     path('classes/<int:classe_id>/eleves/', views.liste_eleves_par_classe, name='liste_eleves_par_classe'),
+     path('classe/<int:classe_id>/pdf/', views.liste_eleves_par_classe_pdf, name='liste_eleves_par_classe_pdf'),
     path('classe/<int:classe_id>/', views.detail_classe, name='detail_classe'),
-
+ 
 
     path('eleves/inscription/', EleveInscriptionWizard.as_view(FORMS), name='inscription_eleve'),
     path('eleves/modifier-eleve/<int:pk>/', EleveModificationWizard.as_view(FORMS), name='modifier_eleve'),
