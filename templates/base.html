@@ -809,21 +809,28 @@
                   </ul>
                   </div>
                   <h5>
-                    {% get_available_languages as LANGUAGES %}
+                    {% load i18n %}  <!-- Charge les balises de traduction -->
 
-                    {% get_language_info_list for LANGUAGES as languages %}
-
-                    <div class="nav-item dropdown">
-                      <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Languages
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% for language in languages %}
-                        <a class="dropdown-item" href="/{{language.code}}">{{ language.name_local }}</a>
-                        {% endfor %}
-                      </div>
-                    </div>
+                    <!-- Formulaire de changement de langue -->
+                    <form action="{% url 'set_language' %}" method="post" id="language-form">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{% url 'home' %}" />  <!-- Rediriger vers home -->
+                        <div class="nav-item dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {% trans "Languages" %}  <!-- Texte traduisible -->
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% get_available_languages as LANGUAGES %}
+                                {% get_language_info_list for LANGUAGES as languages %}
+                                {% for language in languages %}
+                                    <button type="submit" name="language" value="{{ language.code }}" class="dropdown-item">
+                                        {{ language.name_local }}  <!-- Nom de la langue dans la langue locale -->
+                                    </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </form>
                   </nav>
                   <!-- End Navbar -->
                   </div>

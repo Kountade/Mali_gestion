@@ -11,7 +11,6 @@ from . import views
 
 
 urlpatterns = [
-   path("home", views.home, name="home"),
    
     path('liste_annees_scolaires/', views.liste_annees_scolaires, name='liste_annees_scolaires'),
     path('liste_annees_scolaires/ajouter/', views.creer_annee_scolaire, name='creer_annee_scolaire'),
@@ -150,10 +149,13 @@ urlpatterns = [
     
      path('utilisateur/ajouter/', views.ajouter_utilisateur, name='ajouter_utilisateur'),
    # path('utilisateur/<int:pk>/supprimer/', views.supprimer_utilisateur, name='supprimer_utilisateur'),
-     path('', views.login_utilisateur, name='login'),
+   
+    
      path('Logout', views.logout_utilisateur, name='Logout'),
      
-  
+   path("home", views.home, name="home"),
+    path('', views.login_utilisateur, name='login'),
+    path('set_language/', views.set_language, name='set_language'),  # Ajoutez cette ligne
 ]
 
 

@@ -33,7 +33,21 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 from django.shortcuts import render
+# application/views.py
+from django.shortcuts import redirect
+from django.utils.translation import activate
+from django.urls import reverse
 
+def set_language(request):
+    """
+    Vue personnalisée pour changer la langue et rediriger vers la page d'accueil.
+    """
+    if request.method == 'POST':
+        language = request.POST.get('language')
+        if language:
+            activate(language)  # Activer la langue sélectionnée
+            request.session['django_language'] = language  # Sauvegarder la langue dans la session
+    return redirect('home')  # Rediriger vers la page d'accueil
 def custom_404_view(request, exception):
     """
     Vue personnalisée pour la page 404.
