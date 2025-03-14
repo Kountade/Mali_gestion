@@ -55,18 +55,20 @@
                 <i class="bi bi-plus-square"></i> Ajouter un Élève
               </a>
 
-              <!-- Bouton pour télécharger le PDF -->
+              <!-- Bouton pour exporter en Excel -->
               <button
                 class="btn btn-outline-success ms-2"
-                onclick="downloadPDF()"
+                onclick="exportToExcel()"
               >
-                <i class="bi bi-file-earmark-pdf"></i> Exporter en Exel
+                <i class="bi bi-file-earmark-excel"></i> Exporter en Excel
               </button>
+
+              <!-- Bouton pour exporter en PDF -->
               <a
                 href="{% url 'liste_eleves_par_classe_pdf' classe.id %}"
-                class="btn btn-outline-primary ms-auto"
+                class="btn btn-outline-danger ms-2"
               >
-                <i class="bi bi-plus-square"></i>Expoter PDF
+                <i class="bi bi-file-earmark-pdf"></i> Exporter en PDF
               </a>
             </div>
           </div>
@@ -178,6 +180,25 @@
       ],
     });
   });
+</script>
+
+<!-- Inclure SheetJS pour l'export Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+
+<!-- Fonction pour exporter en Excel -->
+<script>
+  function exportToExcel() {
+    // Sélectionner la table
+    const table = document.getElementById("eleves-table");
+
+    // Convertir la table en feuille de calcul
+    const workbook = XLSX.utils.table_to_book(table, {
+      sheet: "Liste des Élèves",
+    });
+
+    // Exporter le fichier Excel
+    XLSX.writeFile(workbook, `liste-eleves-{{ classe.nom }}.xlsx`);
+  }
 </script>
 
 <!-- Inclure jsPDF et html2canvas -->
