@@ -8,15 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 16:34+0000\n"
-"PO-Revision-Date: 2025-03-13 16:34+0000\n"
-"Last-Translator: YOUR NAME <your.email@example.com>\n"
-"Language-Team: Arabic <ar@li.org>\n"
-"Language: ar\n"
+"POT-Creation-Date: 2025-03-18 18:34+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: .\application\forms.py:16 .\templates\niveaux\ajouter_niveau.html:41
 msgid "Nom du Niveau"
@@ -50,98 +51,407 @@ msgstr "قيد التقدم"
 msgid "Clôturée"
 msgstr "مغلقة"
 
-#: .\application\views.py:338
+#: .\application\views.py:363
 msgid "Niveau ajouté avec succès !"
 msgstr "تمت إضافة المستوى بنجاح!"
 
-#: .\gestion_scolaire\settings.py:109
+#: .\gestion_scolaire\settings.py:118
 msgid "Français"
 msgstr "الفرنسية"
 
-#: .\gestion_scolaire\settings.py:110
+#: .\gestion_scolaire\settings.py:119
 msgid "Anglais"
 msgstr "الإنجليزية"
 
-#: .\gestion_scolaire\settings.py:111
+#: .\gestion_scolaire\settings.py:120
 msgid "العربية"
 msgstr "العربية"
 
-#: .\templates\index.html:13
-msgid "Année Scolaire"
-msgstr "السنة الدراسية"
+#: .\templates\base.html:105
+msgid "Tableau de bord"
+msgstr "لوحة التحكم"
 
-#: .\templates\index.html:40
-msgid "Élèves"
-msgstr "التلاميذ"
+#: .\templates\base.html:117
+msgid "Gestion Années"
+msgstr "إدارة السنوات"
 
-#: .\templates\index.html:61
-msgid "Professeurs"
-msgstr "المعلمون"
+#: .\templates\base.html:124
+msgid "Liste Années"
+msgstr "قائمة السنوات"
 
-#: .\templates\index.html:82
-msgid "Classes"
-msgstr "الفصول"
+#: .\templates\base.html:129
+msgid "Ajouter Année"
+msgstr "إضافة سنة"
 
-#: .\templates\index.html:103
-msgid "Surveillants"
-msgstr "المشرفون"
+#: .\templates\base.html:134
+msgid "Liste Semestres"
+msgstr "قائمة الفصول الدراسية"
 
-#: .\templates\index.html:119
-msgid "Professeurs les plus anciens"
-msgstr "أقدم المعلمين"
+#: .\templates\base.html:139
+msgid "Ajouter Semestre"
+msgstr "إضافة فصل دراسي"
 
-#: .\templates\index.html:136 .\templates\index.html:196
-#: .\templates\index.html:269 .\templates\index.html:305
-msgid "Action"
-msgstr "إجراء"
+#: .\templates\base.html:144
+msgid "Liste Devoirs"
+msgstr "قائمة الواجبات"
 
-#: .\templates\index.html:137 .\templates\index.html:197
-#: .\templates\index.html:270 .\templates\index.html:306
-msgid "Another action"
-msgstr "إجراء آخر"
+#: .\templates\base.html:149
+msgid "Ajouter Devoir"
+msgstr "إضافة واجب"
 
-#: .\templates\index.html:138 .\templates\index.html:198
-#: .\templates\index.html:271 .\templates\index.html:307
-msgid "Something else here"
-msgstr "شيء آخر هنا"
+#: .\templates\base.html:154
+msgid "Liste Compositions"
+msgstr "قائمة التكوينات"
 
-#: .\templates\index.html:179
+#: .\templates\base.html:159
+msgid "Ajouter Composition"
+msgstr "إضافة تكوين"
+
+#: .\templates\base.html:164
+msgid "Calendrier"
+msgstr "التقويم"
+
+#: .\templates\base.html:169
+msgid "Ajouter Cours"
+msgstr "إضافة درس"
+
+#: .\templates\base.html:178
+msgid "Gestion des Professeurs"
+msgstr "إدارة الأساتذة"
+
+#: .\templates\base.html:185
+msgid "Liste Professeurs"
+msgstr "قائمة الأساتذة"
+
+#: .\templates\base.html:190
+msgid "Ajouter Professeur"
+msgstr "إضافة أستاذ"
+
+#: .\templates\base.html:199
+msgid "Gestion Matière & Note"
+msgstr "إدارة المواد والدرجات"
+
+#: .\templates\base.html:206
+msgid "Liste Matières"
+msgstr "قائمة المواد"
+
+#: .\templates\base.html:211
+msgid "Ajouter Matière"
+msgstr "إضافة مادة"
+
+#: .\templates\base.html:220
+msgid "Liste Notes"
+msgstr "قائمة الدرجات"
+
+#: .\templates\base.html:225
+msgid "Ajouter Note"
+msgstr "إضافة درجة"
+
+#: .\templates\base.html:234
+msgid "Liste Notes CMP"
+msgstr "قائمة درجات التكوين"
+
+#: .\templates\base.html:239
+msgid "Ajouter Note CMP"
+msgstr "إضافة درجة تكوين"
+
+#: .\templates\base.html:248
+msgid "Gestion Élèves"
+msgstr "إدارة التلاميذ"
+
+#: .\templates\base.html:255
+msgid "Liste Générale"
+msgstr "القائمة العامة"
+
+#: .\templates\base.html:260
+msgid "Inscription/Réinscription"
+msgstr "التسجيل/إعادة التسجيل"
+
+#: .\templates\base.html:265
+msgid "Liste Absences"
+msgstr "قائمة الغيابات"
+
+#: .\templates\base.html:270
+msgid "Noter une Absence"
+msgstr "تسجيل غياب"
+
+#: .\templates\base.html:275
+msgid "Liste Retards"
+msgstr "قائمة التأخرات"
+
+#: .\templates\base.html:280
+msgid "Noter un Retard"
+msgstr "تسجيل تأخر"
+
+#: .\templates\base.html:289
+msgid "Gestion Classe"
+msgstr "إدارة الفصول"
+
+#: .\templates\base.html:296
+msgid "Liste Niveaux"
+msgstr "قائمة المستويات"
+
+#: .\templates\base.html:301
+msgid "Ajouter Niveau"
+msgstr "إضافة مستوى"
+
+#: .\templates\base.html:306
+msgid "Liste Salles"
+msgstr "قائمة القاعات"
+
+#: .\templates\base.html:311
+msgid "Ajouter une Salle"
+msgstr "إضافة قاعة"
+
+#: .\templates\base.html:316
+msgid "Liste Classes"
+msgstr "قائمة الفصول"
+
+#: .\templates\base.html:321
+msgid "Ajouter Classe"
+msgstr "إضافة فصل"
+
+#: .\templates\base.html:330
+msgid "Gestion Surveillant"
+msgstr "إدارة المراقبين"
+
+#: .\templates\base.html:337
+msgid "Liste Surveillants"
+msgstr "قائمة المراقبين"
+
+#: .\templates\base.html:342
+msgid "Ajouter Surveillant"
+msgstr "إضافة مراقب"
+
+#: .\templates\base.html:351
+msgid "Gestion Compte & Utilisateurs"
+msgstr "إدارة الحسابات والمستخدمين"
+
+#: .\templates\base.html:358 .\templates\index.html:180
 msgid "Historique des Paiements"
 msgstr "سجل المدفوعات"
 
-#: .\templates\index.html:210
+#: .\templates\base.html:363
+msgid "Ajouter Paiement"
+msgstr "إضافة دفعة"
+
+#: .\templates\base.html:372
+msgid "Liste Utilisateurs"
+msgstr "قائمة المستخدمين"
+
+#: .\templates\base.html:377
+msgid "Ajouter Utilisateur"
+msgstr "إضافة مستخدم"
+
+#: .\templates\base.html:386
+msgid "Déconnexion"
+msgstr "تسجيل الخروج"
+
+#: .\templates\base.html:392
+msgid "Documentation"
+msgstr "التوثيق"
+
+#: .\templates\base.html:798
+msgid "Languages"
+msgstr "اللغات"
+
+#: .\templates\bulletin\bulletin.html:8
+msgid "Bulletin de Notes"
+msgstr "كشف الدرجات"
+
+#: .\templates\bulletin\bulletin.html:128
+msgid "BULLETIN DE NOTES"
+msgstr "كشف الدرجات"
+
+#: .\templates\bulletin\bulletin.html:140
+msgid "Prénoms"
+msgstr "الأسماء الأولى"
+
+#: .\templates\bulletin\bulletin.html:141
+msgid "Nom"
+msgstr "الاسم"
+
+#: .\templates\bulletin\bulletin.html:144
+msgid "Né(e) le"
+msgstr "تاريخ الميلاد"
+
+#: .\templates\bulletin\bulletin.html:145
+msgid "à"
+msgstr "في"
+
+#: .\templates\bulletin\bulletin.html:148
+msgid "Classe"
+msgstr "الفصل"
+
+#: .\templates\bulletin\bulletin.html:149
+msgid "Matricule"
+msgstr "رقم التسجيل"
+
+#: .\templates\bulletin\bulletin.html:152
+msgid "Nbre d'élèves"
+msgstr "عدد التلاميذ"
+
+#: .\templates\bulletin\bulletin.html:153
+msgid "Classe Redoublée"
+msgstr "الفصل المعاد"
+
+#: .\templates\bulletin\bulletin.html:164
+msgid "DISCIPLINES"
+msgstr "المواد"
+
+#: .\templates\bulletin\bulletin.html:165
+msgid "Devoir"
+msgstr "الواجب"
+
+#: .\templates\bulletin\bulletin.html:166
+msgid "Comp"
+msgstr "التكوين"
+
+#: .\templates\bulletin\bulletin.html:167
+msgid "Moy/20"
+msgstr "المعدل/20"
+
+#: .\templates\bulletin\bulletin.html:168
+msgid "Coef"
+msgstr "المعامل"
+
+#: .\templates\bulletin\bulletin.html:169
+msgid "Moy x"
+msgstr "المعدل ×"
+
+#: .\templates\bulletin\bulletin.html:170
+msgid "T.H"
+msgstr "T.H"
+
+#: .\templates\bulletin\bulletin.html:171
+#: .\templates\bulletin\bulletin.html:198
+msgid "Rang"
+msgstr "الترتيب"
+
+#: .\templates\bulletin\bulletin.html:172
+msgid "Appréciations"
+msgstr "التقييمات"
+
+#: .\templates\bulletin\bulletin.html:196
+msgid "Moyenne"
+msgstr "المعدل"
+
+#: .\templates\bulletin\bulletin.html:200
+msgid "Total"
+msgstr "المجموع"
+
+#: .\templates\bulletin\bulletin.html:202
+msgid "T Coef"
+msgstr "المعامل الكلي"
+
+#: .\templates\bulletin\bulletin.html:203
+msgid "Retards"
+msgstr "التأخرات"
+
+#: .\templates\bulletin\bulletin.html:204
+msgid "Absences"
+msgstr "الغيابات"
+
+#: .\templates\bulletin\bulletin.html:211
+msgid "Appréciations du Directeur"
+msgstr "تقييمات المدير"
+
+#: .\templates\bulletin\bulletin.html:214
+msgid "Félicitations"
+msgstr "تهانٍ"
+
+#: .\templates\bulletin\bulletin.html:215
+msgid "Tableau d'honneur"
+msgstr "لوحة الشرف"
+
+#: .\templates\bulletin\bulletin.html:218
+msgid "Peut mieux faire"
+msgstr "يمكن أن يكون أفضل"
+
+#: .\templates\bulletin\bulletin.html:219
+msgid "Encouragements"
+msgstr "تشجيعات"
+
+#: .\templates\bulletin\bulletin.html:225
+msgid "Observations du Conseil des Professeurs"
+msgstr "ملاحظات مجلس الأساتذة"
+
+#: .\templates\bulletin\bulletin.html:234
+msgid "Exporter ce bulletin en PDF"
+msgstr "تصدير هذا الكشف كـ PDF"
+
+#: .\templates\index.html:14
+msgid "Année Scolaire"
+msgstr "السنة الدراسية"
+
+#: .\templates\index.html:41
+msgid "Élèves"
+msgstr "التلاميذ"
+
+#: .\templates\index.html:62
+msgid "Professeurs"
+msgstr "الأساتذة"
+
+#: .\templates\index.html:83
+msgid "Classes"
+msgstr "الفصول"
+
+#: .\templates\index.html:104
+msgid "Surveillants"
+msgstr "المراقبون"
+
+#: .\templates\index.html:120
+msgid "Professeurs les plus anciens"
+msgstr "أقدم الأساتذة"
+
+#: .\templates\index.html:137 .\templates\index.html:197
+#: .\templates\index.html:270 .\templates\index.html:306
+msgid "Action"
+msgstr "إجراء"
+
+#: .\templates\index.html:138 .\templates\index.html:198
+#: .\templates\index.html:271 .\templates\index.html:307
+msgid "Another action"
+msgstr "إجراء آخر"
+
+#: .\templates\index.html:139 .\templates\index.html:199
+#: .\templates\index.html:272 .\templates\index.html:308
+msgid "Something else here"
+msgstr "شيء آخر هنا"
+
+#: .\templates\index.html:211
 msgid "Référence"
 msgstr "المرجع"
 
-#: .\templates\index.html:211
+#: .\templates\index.html:212
 msgid "Date et Heure"
 msgstr "التاريخ والوقت"
 
-#: .\templates\index.html:212
+#: .\templates\index.html:213
 msgid "Montant"
 msgstr "المبلغ"
 
-#: .\templates\index.html:213
+#: .\templates\index.html:214
 msgid "Statut"
 msgstr "الحالة"
 
-#: .\templates\index.html:225
+#: .\templates\index.html:226
 msgid "Paiement"
 msgstr "الدفع"
 
-#: .\templates\index.html:252
+#: .\templates\index.html:253
 msgid "Répartition des élèves par niveau"
 msgstr "توزيع التلاميذ حسب المستوى"
 
-#: .\templates\index.html:288
+#: .\templates\index.html:289
 msgid "Répartition des élèves par sexe"
 msgstr "توزيع التلاميذ حسب الجنس"
 
-#: .\templates\index.html:368
+#: .\templates\index.html:369
 msgid "Hommes"
 msgstr "رجال"
 
-#: .\templates\index.html:368
+#: .\templates\index.html:369
 msgid "Femmes"
 msgstr "نساء"
 

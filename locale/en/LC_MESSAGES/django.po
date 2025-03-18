@@ -8,11 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 16:34+0000\n"
-"PO-Revision-Date: 2025-03-13 16:34+0000\n"
-"Last-Translator: YOUR NAME <your.email@example.com>\n"
-"Language-Team: English <en@li.org>\n"
-"Language: en\n"
+"POT-Creation-Date: 2025-03-18 18:34+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -50,98 +50,407 @@ msgstr "In Progress"
 msgid "Clôturée"
 msgstr "Closed"
 
-#: .\application\views.py:338
+#: .\application\views.py:363
 msgid "Niveau ajouté avec succès !"
 msgstr "Level added successfully!"
 
-#: .\gestion_scolaire\settings.py:109
+#: .\gestion_scolaire\settings.py:118
 msgid "Français"
 msgstr "French"
 
-#: .\gestion_scolaire\settings.py:110
+#: .\gestion_scolaire\settings.py:119
 msgid "Anglais"
 msgstr "English"
 
-#: .\gestion_scolaire\settings.py:111
+#: .\gestion_scolaire\settings.py:120
 msgid "العربية"
 msgstr "Arabic"
 
-#: .\templates\index.html:13
-msgid "Année Scolaire"
-msgstr "School Year"
+#: .\templates\base.html:105
+msgid "Tableau de bord"
+msgstr "Dashboard"
 
-#: .\templates\index.html:40
-msgid "Élèves"
-msgstr "Students"
+#: .\templates\base.html:117
+msgid "Gestion Années"
+msgstr "Year Management"
 
-#: .\templates\index.html:61
-msgid "Professeurs"
-msgstr "Teachers"
+#: .\templates\base.html:124
+msgid "Liste Années"
+msgstr "Year List"
 
-#: .\templates\index.html:82
-msgid "Classes"
-msgstr "Classes"
+#: .\templates\base.html:129
+msgid "Ajouter Année"
+msgstr "Add Year"
 
-#: .\templates\index.html:103
-msgid "Surveillants"
-msgstr "Supervisors"
+#: .\templates\base.html:134
+msgid "Liste Semestres"
+msgstr "Semester List"
 
-#: .\templates\index.html:119
-msgid "Professeurs les plus anciens"
-msgstr "Most Senior Teachers"
+#: .\templates\base.html:139
+msgid "Ajouter Semestre"
+msgstr "Add Semester"
 
-#: .\templates\index.html:136 .\templates\index.html:196
-#: .\templates\index.html:269 .\templates\index.html:305
-msgid "Action"
-msgstr "Action"
+#: .\templates\base.html:144
+msgid "Liste Devoirs"
+msgstr "Assignment List"
 
-#: .\templates\index.html:137 .\templates\index.html:197
-#: .\templates\index.html:270 .\templates\index.html:306
-msgid "Another action"
-msgstr "Another action"
+#: .\templates\base.html:149
+msgid "Ajouter Devoir"
+msgstr "Add Assignment"
 
-#: .\templates\index.html:138 .\templates\index.html:198
-#: .\templates\index.html:271 .\templates\index.html:307
-msgid "Something else here"
-msgstr "Something else here"
+#: .\templates\base.html:154
+msgid "Liste Compositions"
+msgstr "Composition List"
 
-#: .\templates\index.html:179
+#: .\templates\base.html:159
+msgid "Ajouter Composition"
+msgstr "Add Composition"
+
+#: .\templates\base.html:164
+msgid "Calendrier"
+msgstr "Calendar"
+
+#: .\templates\base.html:169
+msgid "Ajouter Cours"
+msgstr "Add Course"
+
+#: .\templates\base.html:178
+msgid "Gestion des Professeurs"
+msgstr "Teacher Management"
+
+#: .\templates\base.html:185
+msgid "Liste Professeurs"
+msgstr "Teacher List"
+
+#: .\templates\base.html:190
+msgid "Ajouter Professeur"
+msgstr "Add Teacher"
+
+#: .\templates\base.html:199
+msgid "Gestion Matière & Note"
+msgstr "Subject & Grade Management"
+
+#: .\templates\base.html:206
+msgid "Liste Matières"
+msgstr "Subject List"
+
+#: .\templates\base.html:211
+msgid "Ajouter Matière"
+msgstr "Add Subject"
+
+#: .\templates\base.html:220
+msgid "Liste Notes"
+msgstr "Grade List"
+
+#: .\templates\base.html:225
+msgid "Ajouter Note"
+msgstr "Add Grade"
+
+#: .\templates\base.html:234
+msgid "Liste Notes CMP"
+msgstr "Composition Grade List"
+
+#: .\templates\base.html:239
+msgid "Ajouter Note CMP"
+msgstr "Add Composition Grade"
+
+#: .\templates\base.html:248
+msgid "Gestion Élèves"
+msgstr "Student Management"
+
+#: .\templates\base.html:255
+msgid "Liste Générale"
+msgstr "General List"
+
+#: .\templates\base.html:260
+msgid "Inscription/Réinscription"
+msgstr "Registration/Re-registration"
+
+#: .\templates\base.html:265
+msgid "Liste Absences"
+msgstr "Absence List"
+
+#: .\templates\base.html:270
+msgid "Noter une Absence"
+msgstr "Record an Absence"
+
+#: .\templates\base.html:275
+msgid "Liste Retards"
+msgstr "Tardiness List"
+
+#: .\templates\base.html:280
+msgid "Noter un Retard"
+msgstr "Record a Tardiness"
+
+#: .\templates\base.html:289
+msgid "Gestion Classe"
+msgstr "Class Management"
+
+#: .\templates\base.html:296
+msgid "Liste Niveaux"
+msgstr "Level List"
+
+#: .\templates\base.html:301
+msgid "Ajouter Niveau"
+msgstr "Add Level"
+
+#: .\templates\base.html:306
+msgid "Liste Salles"
+msgstr "Room List"
+
+#: .\templates\base.html:311
+msgid "Ajouter une Salle"
+msgstr "Add a Room"
+
+#: .\templates\base.html:316
+msgid "Liste Classes"
+msgstr "Class List"
+
+#: .\templates\base.html:321
+msgid "Ajouter Classe"
+msgstr "Add Class"
+
+#: .\templates\base.html:330
+msgid "Gestion Surveillant"
+msgstr "Supervisor Management"
+
+#: .\templates\base.html:337
+msgid "Liste Surveillants"
+msgstr "Supervisor List"
+
+#: .\templates\base.html:342
+msgid "Ajouter Surveillant"
+msgstr "Add Supervisor"
+
+#: .\templates\base.html:351
+msgid "Gestion Compte & Utilisateurs"
+msgstr "Account & User Management"
+
+#: .\templates\base.html:358 .\templates\index.html:180
 msgid "Historique des Paiements"
 msgstr "Payment History"
 
-#: .\templates\index.html:210
+#: .\templates\base.html:363
+msgid "Ajouter Paiement"
+msgstr "Add Payment"
+
+#: .\templates\base.html:372
+msgid "Liste Utilisateurs"
+msgstr "User List"
+
+#: .\templates\base.html:377
+msgid "Ajouter Utilisateur"
+msgstr "Add User"
+
+#: .\templates\base.html:386
+msgid "Déconnexion"
+msgstr "Logout"
+
+#: .\templates\base.html:392
+msgid "Documentation"
+msgstr "Documentation"
+
+#: .\templates\base.html:798
+msgid "Languages"
+msgstr "Languages"
+
+#: .\templates\bulletin\bulletin.html:8
+msgid "Bulletin de Notes"
+msgstr "Grade Report"
+
+#: .\templates\bulletin\bulletin.html:128
+msgid "BULLETIN DE NOTES"
+msgstr "GRADE REPORT"
+
+#: .\templates\bulletin\bulletin.html:140
+msgid "Prénoms"
+msgstr "First Names"
+
+#: .\templates\bulletin\bulletin.html:141
+msgid "Nom"
+msgstr "Last Name"
+
+#: .\templates\bulletin\bulletin.html:144
+msgid "Né(e) le"
+msgstr "Born on"
+
+#: .\templates\bulletin\bulletin.html:145
+msgid "à"
+msgstr "at"
+
+#: .\templates\bulletin\bulletin.html:148
+msgid "Classe"
+msgstr "Class"
+
+#: .\templates\bulletin\bulletin.html:149
+msgid "Matricule"
+msgstr "Registration Number"
+
+#: .\templates\bulletin\bulletin.html:152
+msgid "Nbre d'élèves"
+msgstr "Number of Students"
+
+#: .\templates\bulletin\bulletin.html:153
+msgid "Classe Redoublée"
+msgstr "Repeated Class"
+
+#: .\templates\bulletin\bulletin.html:164
+msgid "DISCIPLINES"
+msgstr "SUBJECTS"
+
+#: .\templates\bulletin\bulletin.html:165
+msgid "Devoir"
+msgstr "Assignment"
+
+#: .\templates\bulletin\bulletin.html:166
+msgid "Comp"
+msgstr "Composition"
+
+#: .\templates\bulletin\bulletin.html:167
+msgid "Moy/20"
+msgstr "Avg/20"
+
+#: .\templates\bulletin\bulletin.html:168
+msgid "Coef"
+msgstr "Coefficient"
+
+#: .\templates\bulletin\bulletin.html:169
+msgid "Moy x"
+msgstr "Avg x"
+
+#: .\templates\bulletin\bulletin.html:170
+msgid "T.H"
+msgstr "T.H"
+
+#: .\templates\bulletin\bulletin.html:171
+#: .\templates\bulletin\bulletin.html:198
+msgid "Rang"
+msgstr "Rank"
+
+#: .\templates\bulletin\bulletin.html:172
+msgid "Appréciations"
+msgstr "Appreciations"
+
+#: .\templates\bulletin\bulletin.html:196
+msgid "Moyenne"
+msgstr "Average"
+
+#: .\templates\bulletin\bulletin.html:200
+msgid "Total"
+msgstr "Total"
+
+#: .\templates\bulletin\bulletin.html:202
+msgid "T Coef"
+msgstr "Total Coefficient"
+
+#: .\templates\bulletin\bulletin.html:203
+msgid "Retards"
+msgstr "Tardiness"
+
+#: .\templates\bulletin\bulletin.html:204
+msgid "Absences"
+msgstr "Absences"
+
+#: .\templates\bulletin\bulletin.html:211
+msgid "Appréciations du Directeur"
+msgstr "Director's Appreciations"
+
+#: .\templates\bulletin\bulletin.html:214
+msgid "Félicitations"
+msgstr "Congratulations"
+
+#: .\templates\bulletin\bulletin.html:215
+msgid "Tableau d'honneur"
+msgstr "Honor Roll"
+
+#: .\templates\bulletin\bulletin.html:218
+msgid "Peut mieux faire"
+msgstr "Can Do Better"
+
+#: .\templates\bulletin\bulletin.html:219
+msgid "Encouragements"
+msgstr "Encouragements"
+
+#: .\templates\bulletin\bulletin.html:225
+msgid "Observations du Conseil des Professeurs"
+msgstr "Teachers' Council Observations"
+
+#: .\templates\bulletin\bulletin.html:234
+msgid "Exporter ce bulletin en PDF"
+msgstr "Export this Report as PDF"
+
+#: .\templates\index.html:14
+msgid "Année Scolaire"
+msgstr "School Year"
+
+#: .\templates\index.html:41
+msgid "Élèves"
+msgstr "Students"
+
+#: .\templates\index.html:62
+msgid "Professeurs"
+msgstr "Teachers"
+
+#: .\templates\index.html:83
+msgid "Classes"
+msgstr "Classes"
+
+#: .\templates\index.html:104
+msgid "Surveillants"
+msgstr "Supervisors"
+
+#: .\templates\index.html:120
+msgid "Professeurs les plus anciens"
+msgstr "Oldest Teachers"
+
+#: .\templates\index.html:137 .\templates\index.html:197
+#: .\templates\index.html:270 .\templates\index.html:306
+msgid "Action"
+msgstr "Action"
+
+#: .\templates\index.html:138 .\templates\index.html:198
+#: .\templates\index.html:271 .\templates\index.html:307
+msgid "Another action"
+msgstr "Another Action"
+
+#: .\templates\index.html:139 .\templates\index.html:199
+#: .\templates\index.html:272 .\templates\index.html:308
+msgid "Something else here"
+msgstr "Something Else Here"
+
+#: .\templates\index.html:211
 msgid "Référence"
 msgstr "Reference"
 
-#: .\templates\index.html:211
+#: .\templates\index.html:212
 msgid "Date et Heure"
 msgstr "Date and Time"
 
-#: .\templates\index.html:212
+#: .\templates\index.html:213
 msgid "Montant"
 msgstr "Amount"
 
-#: .\templates\index.html:213
+#: .\templates\index.html:214
 msgid "Statut"
 msgstr "Status"
 
-#: .\templates\index.html:225
+#: .\templates\index.html:226
 msgid "Paiement"
 msgstr "Payment"
 
-#: .\templates\index.html:252
+#: .\templates\index.html:253
 msgid "Répartition des élèves par niveau"
-msgstr "Distribution of Students by Level"
+msgstr "Student Distribution by Level"
 
-#: .\templates\index.html:288
+#: .\templates\index.html:289
 msgid "Répartition des élèves par sexe"
-msgstr "Distribution of Students by Gender"
+msgstr "Student Distribution by Gender"
 
-#: .\templates\index.html:368
+#: .\templates\index.html:369
 msgid "Hommes"
 msgstr "Men"
 
-#: .\templates\index.html:368
+#: .\templates\index.html:369
 msgid "Femmes"
 msgstr "Women"
 

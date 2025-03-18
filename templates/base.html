@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -89,6 +90,7 @@
           </div>
           <!-- End Logo Header -->
         </div>
+      
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
@@ -100,122 +102,113 @@
                   aria-expanded="false"
                 >
                   <i class="fas fa-tachometer-alt"></i>
-                  <p>Dashboard</p>
+                  <p>{% trans "Tableau de bord" %}</p>
                   <span class="caret"></span>
                 </a>
-               
               </li>
               <li class="nav-section">
                 <span class="sidebar-mini-icon">
                   <i class="fa fa-ellipsis-h"></i>
                 </span>
-              
               </li>
-                <li class="nav-item">
+              <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#submenu">
                   <i class="fas fa-calendar-alt"></i>
-                  <p>Gestion Années </p>
+                  <p>{% trans "Gestion Années" %}</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="submenu">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'liste_annees_scolaires' %}">
-                        <span class="sub-item">Liste Annnees</span>
+                        <span class="sub-item">{% trans "Liste Années" %}</span>
                       </a>
                     </li>
-                 
                     <li>
                       <a href="{% url 'creer_annee_scolaire' %}">
-                        <span class="sub-item">Ajouter Annnée</span>
+                        <span class="sub-item">{% trans "Ajouter Année" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'liste_semestres' %}">
-                        <span class="sub-item">Liste Semestres</span>
+                        <span class="sub-item">{% trans "Liste Semestres" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_semestre' %}">
-                        <span class="sub-item">Ajouter Annnees</span>
+                        <span class="sub-item">{% trans "Ajouter Semestre" %}</span>
                       </a>
                     </li>
-
                     <li>
                       <a href="{% url 'liste_devoirs' %}">
-                        <span class="sub-item">Liste devoirs </span>
+                        <span class="sub-item">{% trans "Liste Devoirs" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_devoir' %}">
-                        <span class="sub-item">Ajouter Devoir </span>
+                        <span class="sub-item">{% trans "Ajouter Devoir" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'liste_compositions' %}">
-                        <span class="sub-item"> Liste Compositions</span>
+                        <span class="sub-item">{% trans "Liste Compositions" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_composition' %}">
-                        <span class="sub-item"> Ajouter Composition</span>
+                        <span class="sub-item">{% trans "Ajouter Composition" %}</span>
                       </a>
-                    </li>  
-
+                    </li>
                     <li>
                       <a href="{% url 'calendrier' %}">
-                        <span class="sub-item">Calendrier</span>
+                        <span class="sub-item">{% trans "Calendrier" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_cours' %}">
-                        <span class="sub-item">Ajouter Cours</span>
+                        <span class="sub-item">{% trans "Ajouter Cours" %}</span>
                       </a>
                     </li>
-                    
                   </ul>
                 </div>
               </li>
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
                   <i class="fas fa-chalkboard-teacher"></i>
-                  <p>Gestion des professeur</p>
+                  <p>{% trans "Gestion des Professeurs" %}</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="base">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'professeur_list' %}">
-                        <span class="sub-item">Liste Professeurs</span>
+                        <span class="sub-item">{% trans "Liste Professeurs" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_professeur' %}">
-                        <span class="sub-item">Ajouter Professeur</span>
+                        <span class="sub-item">{% trans "Ajouter Professeur" %}</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
-
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarLayouts">
                   <i class="fas fa-book"></i>
-                  <p>Gestion Matiere & Note</p>
+                  <p>{% trans "Gestion Matière & Note" %}</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="sidebarLayouts">
                   <ul class="nav nav-collapse">
-                   
                     <li>
-                      
                       <a href="{% url 'liste_matieres' %}">
-                        <span class="sub-item">Liste matiers</span>
+                        <span class="sub-item">{% trans "Liste Matières" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_matiere' %}">
-                        <span class="sub-item">ajouter Matiere</span>
+                        <span class="sub-item">{% trans "Ajouter Matière" %}</span>
                       </a>
                     </li>
                   </ul>
@@ -224,117 +217,108 @@
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'liste_notes' %}">
-                        <span class="sub-item">Liste Notes</span>
+                        <span class="sub-item">{% trans "Liste Notes" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'creer_note' %}">
-                        <span class="sub-item">Ajouter Note</span>
+                        <span class="sub-item">{% trans "Ajouter Note" %}</span>
                       </a>
                     </li>
                   </ul>
                 </div>
-
-              
                 <div class="collapse" id="sidebarLayouts">
                   <ul class="nav nav-collapse">
-                   
                     <li>
                       <a href="{% url 'liste_notes_composition' %}">
-                        <span class="sub-item">Liste Note CMP</span>
+                        <span class="sub-item">{% trans "Liste Notes CMP" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_note_composition' %}">
-                        <span class="sub-item">Ajouter Note CMP</span>
+                        <span class="sub-item">{% trans "Ajouter Note CMP" %}</span>
                       </a>
                     </li>
                   </ul>
                 </div>
-              
-
-              
+              </li>
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#forms">
                   <i class="fas fa-users"></i>
-                  <p>Gestion Eleves</p>
+                  <p>{% trans "Gestion Élèves" %}</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="forms">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'liste_eleves' %}">
-                        <span class="sub-item">Listes General</span>
+                        <span class="sub-item">{% trans "Liste Générale" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'inscription_eleve' %}">
-                        <span class="sub-item">Incription/Reinstitucion</span>
+                        <span class="sub-item">{% trans "Inscription/Réinscription" %}</span>
                       </a>
                     </li>
-                    
                     <li>
                       <a href="{% url 'liste_absences' %}">
-                        <span class="sub-item">Liste Absences</span>
+                        <span class="sub-item">{% trans "Liste Absences" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_absence' %}">
-                        <span class="sub-item">Noter une Absence</span>
+                        <span class="sub-item">{% trans "Noter une Absence" %}</span>
                       </a>
                     </li>
-
                     <li>
                       <a href="{% url 'liste_retards' %}">
-                        <span class="sub-item">Liste Retards</span>
+                        <span class="sub-item">{% trans "Liste Retards" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_absence' %}">
-                        <span class="sub-item">Noter un Retard</span>
+                        <span class="sub-item">{% trans "Noter un Retard" %}</span>
                       </a>
                     </li>
                   </ul>
                 </div>
-                
               </li>
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables">
                   <i class="fas fa-school"></i>
-                  <p>Gestion Classe</p>
+                  <p>{% trans "Gestion Classe" %}</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="tables">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'liste_niveaux' %}">
-                        <span class="sub-item">Liste Niveau</span>
+                        <span class="sub-item">{% trans "Liste Niveaux" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_niveau' %}">
-                        <span class="sub-item">Ajouter Niveau</span>
+                        <span class="sub-item">{% trans "Ajouter Niveau" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'liste_salles' %}">
-                        <span class="sub-item">Listes Salles</span>
+                        <span class="sub-item">{% trans "Liste Salles" %}</span>
                       </a>
                     </li>
-
                     <li>
                       <a href="{% url 'ajouter_salle' %}">
-                        <span class="sub-item">Ajouter une Salle</span>
+                        <span class="sub-item">{% trans "Ajouter une Salle" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'liste_classes' %}">
-                        <span class="sub-item">Liste Classes</span>
+                        <span class="sub-item">{% trans "Liste Classes" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_classe' %}">
-                        <span class="sub-item">Ajouter Classes</span>
+                        <span class="sub-item">{% trans "Ajouter Classe" %}</span>
                       </a>
                     </li>
                   </ul>
@@ -343,42 +327,40 @@
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#maps">
                   <i class="fas fa-user-shield"></i>
-                  <p>Gestion Surveillant</p>
+                  <p>{% trans "Gestion Surveillant" %}</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="maps">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'liste_surveillants' %}">
-                        <span class="sub-item">Listes Surveillant</span>
+                        <span class="sub-item">{% trans "Liste Surveillants" %}</span>
                       </a>
                     </li>
                     <li>
                       <a href="{% url 'ajouter_surveillant' %}">
-                        <span class="sub-item">Ajouter Surveillant</span>
+                        <span class="sub-item">{% trans "Ajouter Surveillant" %}</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
-        
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#charts">
                   <i class="fas fa-user-cog"></i>
-                  <p>Gestion Compte & Users</p>
+                  <p>{% trans "Gestion Compte & Utilisateurs" %}</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="charts">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'liste_paiements' %}">
-                        <span class="sub-item">Historiquement Paiement</span>
+                        <span class="sub-item">{% trans "Historique des Paiements" %}</span>
                       </a>
                     </li>
-
                     <li>
                       <a href="{% url 'creer_paiement' %}">
-                        <span class="sub-item">Ajouter Paiement</span>
+                        <span class="sub-item">{% trans "Ajouter Paiement" %}</span>
                       </a>
                     </li>
                   </ul>
@@ -387,35 +369,30 @@
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="">
-                        <span class="sub-item">Liste Utilisateurs</span>
+                        <span class="sub-item">{% trans "Liste Utilisateurs" %}</span>
                       </a>
                     </li>
-
                     <li>
                       <a href="">
-                        <span class="sub-item">Ajouter Utilisateurs</span>
+                        <span class="sub-item">{% trans "Ajouter Utilisateur" %}</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
-
               <li class="nav-item">
                 <a href="{% url 'Logout' %}">
-                  <i class="fas fa-sign-out-alt"></i> <!-- Icône de déconnexion -->
-                  <p>Déconnexion</p>
-                 
+                  <i class="fas fa-sign-out-alt"></i>
+                  <p>{% trans "Déconnexion" %}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#">
                   <i class="fas fa-desktop"></i>
-                  <p>documentation</p>
+                  <p>{% trans "Documentation" %}</p>
                   <span class="badge badge-success">4</span>
                 </a>
               </li>
-             
-             
             </ul>
           </div>
         </div>
@@ -842,15 +819,13 @@
                       <nav class="pull-left">
                         <ul class="nav">
                           <li class="nav-item">
-                            <a class="nav-link" href="http://www.themekita.com">
-                              ThemeKita
-                            </a>
+                           
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" href="#"> Aide </a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#"> Licences </a>
+                          
                           </li>
                         </ul>
                       </nav>

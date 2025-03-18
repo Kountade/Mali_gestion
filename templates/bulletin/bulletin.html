@@ -1,9 +1,11 @@
+{% load i18n %}
+<!-- Charger i18n pour la traduction -->
 <!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bulletin de Notes</title>
+    <title>{% trans "Bulletin de Notes" %}</title>
     <style>
       body {
         font-family: "Times New Roman", Times, serif;
@@ -123,7 +125,7 @@
           <h3>{{ eleve.annee_scolaire.reference }}</h3>
         </div>
         <div class="header-center">
-          <h2>BULLETIN DE NOTES</h2>
+          <h2>{% trans "BULLETIN DE NOTES" %}</h2>
           <h2>{{ bulletin.semestre.nom }}</h2>
         </div>
         <div class="header-right">
@@ -135,20 +137,20 @@
       <div class="student-info">
         <table>
           <tr>
-            <td>Prénoms: {{ eleve.prenom }}</td>
-            <td>Nom: {{ eleve.nom }}</td>
+            <td>{% trans "Prénoms" %}: {{ eleve.prenom }}</td>
+            <td>{% trans "Nom" %}: {{ eleve.nom }}</td>
           </tr>
           <tr>
-            <td>Né(e) le: {{ eleve.date_naissance }}</td>
-            <td>à: {{ eleve.lieu_naissance }}</td>
+            <td>{% trans "Né(e) le" %}: {{ eleve.date_naissance }}</td>
+            <td>{% trans "à" %}: {{ eleve.lieu_naissance }}</td>
           </tr>
           <tr>
-            <td>Classe: {{ classe.nom }}</td>
-            <td>Matricule: {{ eleve.matricule }}</td>
+            <td>{% trans "Classe" %}: {{ classe.nom }}</td>
+            <td>{% trans "Matricule" %}: {{ eleve.matricule }}</td>
           </tr>
           <tr>
-            <td>Nbre d'élèves: {{ nombre_eleves_classe }}</td>
-            <td>Classe Redoublée: 0</td>
+            <td>{% trans "Nbre d'élèves" %}: {{ nombre_eleves_classe }}</td>
+            <td>{% trans "Classe Redoublée" %}: 0</td>
           </tr>
         </table>
       </div>
@@ -159,15 +161,15 @@
         <table class="grades-table">
           <thead>
             <tr>
-              <th>DISCIPLINES</th>
-              <th>Devoir</th>
-              <th>Comp</th>
-              <th>Moy/20</th>
-              <th>Coef</th>
-              <th>Moy x</th>
-              <th>T.H</th>
-              <th>Rang</th>
-              <th>Appréciations</th>
+              <th>{% trans "DISCIPLINES" %}</th>
+              <th>{% trans "Devoir" %}</th>
+              <th>{% trans "Comp" %}</th>
+              <th>{% trans "Moy/20" %}</th>
+              <th>{% trans "Coef" %}</th>
+              <th>{% trans "Moy x" %}</th>
+              <th>{% trans "T.H" %}</th>
+              <th>{% trans "Rang" %}</th>
+              <th>{% trans "Appréciations" %}</th>
             </tr>
           </thead>
           <tbody>
@@ -190,33 +192,37 @@
         <div class="footer">
           <table>
             <tr>
-              <td>Moyenne: {{ bulletin.moyenne_generale }} /20</td>
-              <td>Rang: {{ bulletin.rang }}</td>
-              <td>Total: {{ bulletin.total_moyenne_absolue|floatformat:2 }}</td>
-              <td>T Coef: {{ bulletin.total_coefficients }}</td>
-              <td>Retards: {{ bulletin.nombre_retards }}</td>
-              <td>Absences: {{ bulletin.nombre_absences }}</td>
+              <td>
+                {% trans "Moyenne" %}: {{ bulletin.moyenne_generale }} /20
+              </td>
+              <td>{% trans "Rang" %}: {{ bulletin.rang }}</td>
+              <td>
+                {% trans "Total" %}: {{ bulletin.total_moyenne_absolue|floatformat:2 }}
+              </td>
+              <td>{% trans "T Coef" %}: {{ bulletin.total_coefficients }}</td>
+              <td>{% trans "Retards" %}: {{ bulletin.nombre_retards }}</td>
+              <td>{% trans "Absences" %}: {{ bulletin.nombre_absences }}</td>
             </tr>
           </table>
         </div>
       </div>
 
       <div class="appreciations">
-        <h3>Appréciations du Directeur</h3>
+        <h3>{% trans "Appréciations du Directeur" %}</h3>
         <table class="appreciations-table">
           <tr>
-            <td><input type="checkbox" /> Félicitations</td>
-            <td><input type="checkbox" /> Tableau d'honneur</td>
+            <td><input type="checkbox" /> {% trans "Félicitations" %}</td>
+            <td><input type="checkbox" /> {% trans "Tableau d'honneur" %}</td>
           </tr>
           <tr>
-            <td><input type="checkbox" /> Peut mieux faire</td>
-            <td><input type="checkbox" /> Encouragements</td>
+            <td><input type="checkbox" /> {% trans "Peut mieux faire" %}</td>
+            <td><input type="checkbox" /> {% trans "Encouragements" %}</td>
           </tr>
         </table>
       </div>
 
       <div class="observations">
-        <h3>Observations du Conseil des Professeurs</h3>
+        <h3>{% trans "Observations du Conseil des Professeurs" %}</h3>
         <textarea></textarea>
       </div>
 
@@ -225,7 +231,7 @@
         class="export-button"
         onclick="exportToPDF('bulletin-{{ forloop.counter }}')"
       >
-        Exporter ce bulletin en PDF
+        {% trans "Exporter ce bulletin en PDF" %}
       </button>
     </div>
     {% endfor %}
