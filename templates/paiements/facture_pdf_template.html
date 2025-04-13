@@ -1,0 +1,545 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facture Scolaire #{{ paiement.id }}</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <style>
+      :root {
+        --primary: #3498db;
+        --secondary: #2ecc71;
+        --accent: #e74c3c;
+        --light: #f8f9fa;
+        --dark: #343a40;
+        --school-primary: #2980b9;
+        --school-secondary: #27ae60;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f5f5f5;
+        padding: 20px;
+      }
+
+      .invoice-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .invoice-header {
+        background: linear-gradient(
+          135deg,
+          var(--school-primary) 0%,
+          var(--primary) 100%
+        );
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .school-logo {
+        height: 80px;
+        margin-bottom: 15px;
+      }
+
+      .invoice-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 10px 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .invoice-info {
+        display: flex;
+        justify-content: space-between;
+        padding: 25px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .student-info,
+      .school-info {
+        flex: 1;
+        padding: 0 15px;
+      }
+
+      .info-card {
+        border-left: 4px solid var(--school-primary);
+        padding-left: 15px;
+        margin-bottom: 20px;
+      }
+
+      .info-card h3 {
+        color: var(--school-primary);
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      .items-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .items-table th {
+        background-color: var(--school-primary);
+        color: white;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .items-table td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .items-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .total-section {
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: right;
+        border-top: 2px solid var(--school-primary);
+      }
+
+      .payment-method {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #f0f8ff;
+        border-radius: 5px;
+      }
+
+      .signatures {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding-top: 30px;
+        border-top: 1px dashed #ccc;
+      }
+
+      .signature-box {
+        width: 45%;
+        text-align: center;
+      }
+
+      .signature-line {
+        border-top: 1px dashed #666;
+        padding-top: 40px;
+        margin-top: 10px;
+        position: relative;
+      }
+
+      .signature-line::before {
+        content: "Signature";
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 0 10px;
+        color: #666;
+        font-size: 0.9em;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #777;
+        font-size: 0.9em;
+        border-top: 1px solid #eee;
+        margin-top: 30px;
+      }
+
+      /* Boutons d'action */
+      .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 30px;
+        padding: 20px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-print {
+        background-color: var(--school-primary);
+        color: white;
+      }
+
+      .btn-pdf {
+        background-color: var(--accent);
+        color: white;
+      }
+
+      .btn-email {
+        background-color: var(--school-secondary);
+        color: white;
+      }
+
+      /* Styles impression */
+      @media print {
+        body {
+          padding: 0;
+          background: none;
+        }
+
+        .invoice-container {
+          box-shadow: none;
+          border-radius: 0;
+        }
+
+        .no-print {
+          display: none !important;
+        }
+
+        @page {
+          margin: 1cm;
+          size: A4 portrait;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="invoice-container">
+      <!-- En-tête -->
+      <div class="invoice-header">
+        <img
+          src="{% static 'img/school-logo.png' %}"
+          alt="Logo École"
+          class="school-logo"
+        />
+        <h1 class="invoice-title">Facture de Paiement</h1>
+        <p>Reçu pour services éducatifs</p>
+      </div>
+
+      <!-- Informations -->
+      <div class="invoice-info">
+        <div class="student-info">
+          <div class="info-card">
+            <h3>Élève</h3>
+            <p>
+              <strong>Nom :</strong> {{ paiement.eleve.nom }} {{
+              paiement.eleve.prenom }}
+            </p>
+            <p><strong>Classe :</strong> {{ paiement.eleve.classe.nom }}</p>
+            <p>
+              <strong>N° Matricule :</strong> {{ paiement.eleve.matricule }}
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h3>Responsable</h3>
+            <p><strong>Nom :</strong> {{ paiement.eleve.responsable.nom }}</p>
+            <p>
+              <strong>Téléphone :</strong> {{
+              paiement.eleve.responsable.telephone }}
+            </p>
+            <p>
+              <strong>Email :</strong> {{ paiement.eleve.responsable.email }}
+            </p>
+          </div>
+        </div>
+
+        <div class="school-info">
+          <div class="info-card">
+            <h3>Établissement</h3>
+            <p><strong>Nom :</strong> École Excellence</p>
+            <p><strong>Adresse :</strong> 123 Avenue de l'Éducation, Ville</p>
+            <p><strong>Tél :</strong> +212 522-123-456</p>
+            <p><strong>Email :</strong> contact@ecole-excellence.ma</p>
+          </div>
+
+          <div class="info-card">
+            <h3>Facture</h3>
+            <p><strong>N° Facture :</strong> {{ paiement.id }}</p>
+            <p><strong>Date :</strong> {{ paiement.date|date:"d/m/Y" }}</p>
+            <p>
+              <strong>Période :</strong> {{ paiement.mois }} {{ paiement.annee
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Détails du paiement -->
+      <div style="padding: 0 25px">
+        <table class="items-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Montant (MAD)</th>
+              <th>Remise</th>
+              <th>Total (MAD)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Frais de scolarité {{ paiement.mois }}</td>
+              <td>{{ paiement.montant|floatformat:2 }}</td>
+              <td>{{ paiement.remise|floatformat:2 }}</td>
+              <td>{{ paiement.total|floatformat:2 }}</td>
+            </tr>
+            {% for frais in frais_supplementaires %}
+            <tr>
+              <td>{{ frais.description }}</td>
+              <td>{{ frais.montant|floatformat:2 }}</td>
+              <td>0.00</td>
+              <td>{{ frais.montant|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Total -->
+      <div class="total-section">
+        <p>
+          <strong>Total partiel :</strong> {{ paiement.montant|floatformat:2 }}
+          MAD
+        </p>
+        <p>
+          <strong>Remise :</strong> -{{ paiement.remise|floatformat:2 }} MAD
+        </p>
+        <p>
+          <strong>Total général :</strong> {{ paiement.total|floatformat:2 }}
+          MAD
+        </p>
+        <h3 style="margin-top: 10px">
+          Montant en lettres : <em>{{ montant_en_lettres }} dirhams</em>
+        </h3>
+      </div>
+
+      <!-- Mode de paiement -->
+      <div class="payment-method">
+        <h3>Mode de Paiement</h3>
+        <p><strong>Méthode :</strong> {{ paiement.get_methode_display }}</p>
+        {% if paiement.methode == 'chèque' %}
+        <p><strong>N° Chèque :</strong> {{ paiement.reference }}</p>
+        {% elif paiement.methode == 'virement' %}
+        <p><strong>Référence :</strong> {{ paiement.reference }}</p>
+        {% endif %}
+        <p>
+          <strong>Date Paiement :</strong> {{
+          paiement.date_paiement|date:"d/m/Y" }}
+        </p>
+        <p>
+          <strong>Statut :</strong>
+          <span
+            style="color: {% if paiement.statut == 'payé' %}green{% else %}red{% endif %}"
+            >{{ paiement.get_statut_display }}</span
+          >
+        </p>
+      </div>
+
+      <!-- Signatures -->
+      <div class="signatures">
+        <div class="signature-box">
+          <p>Le Responsable Financier</p>
+          <div class="signature-line"></div>
+        </div>
+        <div class="signature-box">
+          <p>Le Responsable de l'Élève</p>
+          <div class="signature-line"></div>
+        </div>
+      </div>
+
+      <!-- Pied de page -->
+      <div class="footer">
+        <p>École Excellence - Agrément N°12345 - SIRET 12345678900010</p>
+        <p>
+          Facture générée le {% now "d/m/Y à H:i" %} - Toute réclamation doit
+          être formulée sous 8 jours
+        </p>
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="action-buttons no-print">
+        <button onclick="window.print()" class="btn btn-print">
+          <i class="bi bi-printer"></i> Imprimer
+        </button>
+        <button id="generatePdf" class="btn btn-pdf">
+          <i class="bi bi-file-earmark-pdf"></i> Télécharger PDF
+        </button>
+        <button id="sendEmail" class="btn btn-email">
+          <i class="bi bi-envelope"></i> Envoyer par Email
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal d'envoi email -->
+    <div class="modal fade" id="emailModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Envoyer la facture</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Envoyer cette facture à
+              <strong>{{ paiement.eleve.responsable.email }}</strong> ?
+            </p>
+            <div class="mb-3">
+              <label for="emailSubject" class="form-label">Objet :</label>
+              <input
+                type="text"
+                class="form-control"
+                id="emailSubject"
+                value="Facture Scolaire #{{ paiement.id }}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="emailMessage" class="form-label">Message :</label>
+              <textarea class="form-control" id="emailMessage" rows="4">
+Madame, Monsieur,
+
+Veuillez trouver ci-joint la facture #{{ paiement.id }} pour les frais scolaires de {{ paiement.eleve.prenom }} {{ paiement.eleve.nom }}.
+
+Cordialement,
+L'administration</textarea
+              >
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Annuler
+            </button>
+            <button type="button" class="btn btn-primary" id="confirmSend">
+              Envoyer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+      // Génération PDF
+      document
+        .getElementById("generatePdf")
+        .addEventListener("click", async function () {
+          const { jsPDF } = window.jspdf;
+          const element = document.querySelector(".invoice-container");
+
+          const pdf = new jsPDF("p", "mm", "a4");
+          const canvas = await html2canvas(element, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            backgroundColor: "#FFFFFF",
+          });
+
+          const imgData = canvas.toDataURL("image/png");
+          const imgWidth = 210; // Largeur A4 en mm
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+          pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+          pdf.save(`facture-scolaire-{{ paiement.id }}.pdf`);
+        });
+
+      // Envoi Email
+      const emailModal = new bootstrap.Modal(
+        document.getElementById("emailModal")
+      );
+      document
+        .getElementById("sendEmail")
+        .addEventListener("click", function () {
+          emailModal.show();
+        });
+
+      document
+        .getElementById("confirmSend")
+        .addEventListener("click", async function () {
+          const btn = this;
+          btn.innerHTML =
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Envoi en cours...';
+          btn.disabled = true;
+
+          try {
+            // Générer le PDF
+            const { jsPDF } = window.jspdf;
+            const element = document.querySelector(".invoice-container");
+            const pdf = new jsPDF("p", "mm", "a4");
+            const canvas = await html2canvas(element, { scale: 2 });
+            const imgData = canvas.toDataURL("image/png");
+            const imgWidth = 210;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+            const pdfBlob = pdf.output("blob");
+
+            // Envoyer au serveur
+            const formData = new FormData();
+            formData.append("pdf", pdfBlob, `facture-{{ paiement.id }}.pdf`);
+            formData.append("eleve_id", "{{ paiement.eleve.id }}");
+            formData.append("email", "{{ paiement.eleve.responsable.email }}");
+            formData.append(
+              "subject",
+              document.getElementById("emailSubject").value
+            );
+            formData.append(
+              "message",
+              document.getElementById("emailMessage").value
+            );
+            formData.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+            const response = await fetch("/send_school_invoice/", {
+              method: "POST",
+              body: formData,
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              alert("Facture envoyée avec succès !");
+              emailModal.hide();
+            } else {
+              throw new Error(data.error || "Erreur lors de l'envoi");
+            }
+          } catch (error) {
+            alert("Erreur : " + error.message);
+          } finally {
+            btn.innerHTML = "Envoyer";
+            btn.disabled = false;
+          }
+        });
+    </script>
+  </body>
+</html>

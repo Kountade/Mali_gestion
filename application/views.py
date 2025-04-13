@@ -1373,7 +1373,7 @@ def bulletin(request, pk):
         'classe': classe,
         'nombre_eleves_classe': nombre_eleves_classe,
     })
-    
+
     
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -1654,6 +1654,8 @@ def details_paiement(request, pk):
         'paiement': paiement,
         'eleve': eleve,  # Passer l'élève au template
     })
+
+
 # Créer un paiement
 def creer_paiement(request):
     if request.method == 'POST':
@@ -1691,6 +1693,19 @@ def supprimer_paiement(request, pk):
 
 
 
+
+def generate_facture_pdf(request, pk):
+    # Récupération des données
+    paiement = get_object_or_404(Paiement, pk=pk)
+    eleve = paiement.eleve
+    
+    # Calculs supplémentaires si nécessaire
+    # ...
+    
+    return render(request, 'paiements/facture_pdf_template.html', {
+        'paiement': paiement,
+        'eleve': eleve,
+    })
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages

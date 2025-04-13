@@ -59,7 +59,7 @@ urlpatterns = [
     path('classes/modifier/<int:classe_id>/',  views.modifier_classe, name='modifier_classe'),
     path('classes/supprimer/<int:classe_id>/',  views.supprimer_classe, name='supprimer_classe'),
     path('classes/<int:classe_id>/eleves/', views.liste_eleves_par_classe, name='liste_eleves_par_classe'),
-     path('classe/<int:classe_id>/pdf/', views.liste_eleves_par_classe_pdf, name='liste_eleves_par_classe_pdf'),
+    path('classe/<int:classe_id>/pdf/', views.liste_eleves_par_classe_pdf, name='liste_eleves_par_classe_pdf'),
     path('classe/<int:classe_id>/', views.detail_classe, name='detail_classe'),
  
 
@@ -145,6 +145,8 @@ urlpatterns = [
     path('paiements/creer/', views.creer_paiement, name='creer_paiement'),
     path('paiements/<int:pk>/modifier/', views.modifier_paiement, name='modifier_paiement'),
     path('paiements/<int:pk>/supprimer/', views.supprimer_paiement, name='supprimer_paiement'),
+    path('paiements/<int:pk>/facture/', views.generate_facture_pdf, name='facture_pdf'),
+
     
     
      path('utilisateur/ajouter/', views.ajouter_utilisateur, name='ajouter_utilisateur'),
