@@ -79,9 +79,15 @@
 
             <div class="d-flex justify-content-center gap-2 mt-3">
               <a href="{% url 'detail_eleve' eleve.pk %}" class="btn btn-outline-primary btn-sm shadow-sm"><i class="fas fa-eye"></i> Voir</a>
-              <a href="{% url 'modifier_eleve' eleve.id %}" class="btn btn-outline-warning btn-sm shadow-sm"><i class="fas fa-edit"></i></a>
+              <a href="{% url 'modifier_eleve' eleve.id %}" class="btn btn-outline-warning btn-sm shadow-sm"><i class="fas fa-edit"></i>Modifier</a>
+              <a href="{% url 'detail_eleveins' eleve.pk %}" class="btn btn-sm btn-info" title="Voir détails">
+                <i class="fas fa-eye"></i>
+            </a>
               <button class="btn btn-outline-danger btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-eleve-id="{{ eleve.id }}">
                 <i class="fas fa-trash"></i>
+    
+  
+
               </button>
             </div>
           </div>

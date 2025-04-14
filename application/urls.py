@@ -65,6 +65,7 @@ urlpatterns = [
 
     path('eleves/inscription/', EleveInscriptionWizard.as_view(FORMS), name='inscription_eleve'),
     path('eleves/modifier-eleve/<int:pk>/', EleveModificationWizard.as_view(FORMS), name='modifier_eleve'),
+    path('eleve/<int:pk>/', views.detail_eleveins, name='detail_eleveins'),
     path('eleves/',  views.liste_eleves, name='liste_eleves'),
     path('eleve/<int:pk>/', views.eleve_delete, name='eleve_delete'),
     # path('eleves/<int:pk>/',  views.detail_eleve, name='detail_eleve'),

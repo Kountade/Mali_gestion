@@ -611,17 +611,13 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.contrib import messages
 
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib import messages
 from django.db.utils import IntegrityError
-from formtools.wizard.views import SessionWizardView
-from .models import Eleve
 
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.db import IntegrityError, transaction
 from formtools.wizard.views import SessionWizardView
-from .models import Eleve
+
 
 class EleveModificationWizard(SessionWizardView):
     form_list = FORMS
@@ -705,8 +701,28 @@ class EleveModificationWizard(SessionWizardView):
         return redirect('liste_eleves')
 
 
+from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from .models import Eleve
 
+from django.shortcuts import get_object_or_404, render
+from .models import Eleve
 
+def detail_eleve(request, pk):
+    eleve = get_object_or_404(Eleve, pk=pk)  # Renvoie 404 si l'élève n'existe pas
+    return render(request, 'eleves/detail_eleve.html', {'eleve': eleve})
+def detail_eleveins(request, pk):
+    """
+    Affiche les détails complets d'un élève inscrit
+    """
+    eleve = get_object_or_404(Eleve, pk=pk)
+    
+    context = {
+        'eleve': eleve,
+        'page_title': f"Détails de l'élève {eleve.prenom} {eleve.nom}",
+    }
+    
+    return render(request, 'eleves/detail_eleve.html', context)
 def liste_eleves(request):
     eleves = Eleve.objects.all()  # Récupère tous les élèves
 
