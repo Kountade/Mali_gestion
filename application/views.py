@@ -723,6 +723,73 @@ def detail_eleveins(request, pk):
     }
     
     return render(request, 'eleves/detail_eleve.html', context)
+
+# views.py
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
+from reportlab.lib import colors
+from .models import Eleve
+from io import BytesIO
+
+def generer_recu_inscription(request, pk):
+    eleve = Eleve.objects.get(pk=pk)
+    
+    # Création du buffer PDF
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    elements = []
+    
+    # Styles
+    styles = getSampleStyleSheet()
+    style_heading = ParagraphStyle(
+        'heading',
+        parent=styles['Heading1'],
+        fontSize=14,
+        alignment=1,  # Centré
+        spaceAfter=20
+    )
+    style_normal = styles['Normal']
+    
+    # Contenu du PDF
+    elements.append(Paragraph("RECU D'INSCRIPTION", style_heading))
+    elements.append(Paragraph(f"<b>Établissement:</b> VOTRE ETABLISSEMENT", style_normal))
+    elements.append(Paragraph(f"<b>Année scolaire:</b> {eleve.annee_scolaire}", style_normal))
+    elements.append(Paragraph("_________________________________________", style_normal))
+    
+    # Informations élève
+    eleve_data = [
+        ["Matricule:", eleve.matricule],
+        ["Nom complet:", f"{eleve.nom} {eleve.prenom}"],
+        ["Classe:", eleve.classe],
+        ["Date inscription:", eleve.date_inscription.strftime("%d/%m/%Y")],
+        ["Frais d'inscription:", eleve.get_frais_inscription_display()],
+    ]
+    
+    t = Table(eleve_data, colWidths=[150, 250])
+    t.setStyle(TableStyle([
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('ALIGN', (0, 0), (0, -1), 'RIGHT'),
+    ]))
+    elements.append(t)
+    
+    # Signature
+    elements.append(Paragraph("<br/><br/>_________________________________________", style_normal))
+    elements.append(Paragraph("Signature", style_normal))
+    
+    # Génération du PDF
+    doc.build(elements)
+    buffer.seek(0)
+    
+    # Réponse HTTP
+    response = HttpResponse(buffer, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="recu_inscription_{eleve.matricule}.pdf"'
+    return response
+
 def liste_eleves(request):
     eleves = Eleve.objects.all()  # Récupère tous les élèves
 
