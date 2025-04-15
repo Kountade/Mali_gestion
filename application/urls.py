@@ -69,6 +69,7 @@ urlpatterns = [
     path('eleves/',  views.liste_eleves, name='liste_eleves'),
     path('eleve/<int:pk>/', views.eleve_delete, name='eleve_delete'),
     path('eleve/<int:pk>/recu-inscription/', views.generer_recu_inscription, name='generer_recu_inscription'),
+    
     # path('eleves/<int:pk>/',  views.detail_eleve, name='detail_eleve'),
     # path('eleves/modifier/<int:pk>/',  views.modifier_eleve, name='modifier_eleve'),
     # path('eleves/supprimer/<int:pk>/',  views.supprimer_eleve, name='supprimer_eleve'),

@@ -734,61 +734,143 @@ from reportlab.lib import colors
 from .models import Eleve
 from io import BytesIO
 
+
+
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
+from reportlab.platypus import Image as ReportLabImage
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
+from io import BytesIO
+from django.http import HttpResponse
+
 def generer_recu_inscription(request, pk):
     eleve = Eleve.objects.get(pk=pk)
-    
-    # Création du buffer PDF
     buffer = BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=letter)
-    elements = []
     
-    # Styles
-    styles = getSampleStyleSheet()
-    style_heading = ParagraphStyle(
-        'heading',
-        parent=styles['Heading1'],
-        fontSize=14,
-        alignment=1,  # Centré
-        spaceAfter=20
+    doc = SimpleDocTemplate(
+        buffer,
+        pagesize=A4,
+        rightMargin=40,
+        leftMargin=40,
+        topMargin=100,
+        bottomMargin=70
     )
-    style_normal = styles['Normal']
-    
-    # Contenu du PDF
-    elements.append(Paragraph("RECU D'INSCRIPTION", style_heading))
-    elements.append(Paragraph(f"<b>Établissement:</b> VOTRE ETABLISSEMENT", style_normal))
-    elements.append(Paragraph(f"<b>Année scolaire:</b> {eleve.annee_scolaire}", style_normal))
-    elements.append(Paragraph("_________________________________________", style_normal))
-    
-    # Informations élève
-    eleve_data = [
-        ["Matricule:", eleve.matricule],
-        ["Nom complet:", f"{eleve.nom} {eleve.prenom}"],
-        ["Classe:", eleve.classe],
-        ["Date inscription:", eleve.date_inscription.strftime("%d/%m/%Y")],
-        ["Frais d'inscription:", eleve.get_frais_inscription_display()],
+
+    elements = []
+    styles = getSampleStyleSheet()
+
+    # Styles personnalisés
+    title_style = ParagraphStyle(name="Title", fontSize=18, alignment=1, spaceAfter=20, textColor=colors.HexColor("#154360"))
+    section_title_style = ParagraphStyle(name="SectionTitle", fontSize=12, alignment=1, textColor=colors.HexColor("#1F618D"), backColor=colors.HexColor("#D6EAF8"), spaceAfter=10, spaceBefore=20, leading=14)
+    label_style = ParagraphStyle(name="Label", fontSize=10, textColor=colors.HexColor("#34495E"))
+    value_style = ParagraphStyle(name="Value", fontSize=10)
+
+    # === En-tête (logo + nom d’école) ===
+    elements.append(Paragraph("<b>ÉCOLE SUPÉRIEURE TECHNIQUE</b><br/><i>Formation d'excellence pour l'avenir</i>", title_style))
+    elements.append(Spacer(1, 10))
+    elements.append(Paragraph("REÇU D’INSCRIPTION", ParagraphStyle(name="MainTitle", fontSize=16, alignment=1, textColor=colors.HexColor("#1A5276"), spaceAfter=10)))
+    elements.append(Spacer(1, 20))
+
+    # === Section 1 : Informations Administratives ===
+    elements.append(Paragraph("1. Informations Administratives", section_title_style))
+    admin_data = [
+        ["Année scolaire", str(eleve.annee_scolaire)],
+        ["Date d'inscription", eleve.date_inscription.strftime("%d/%m/%Y")],
+        ["Matricule", eleve.matricule],
+        ["Classe", str(eleve.classe)],
+        ["Paiement", eleve.paiement],
+        ["Frais d'inscription", "Payée" if eleve.frais_inscription == "P" else "Non payée"]
     ]
-    
-    t = Table(eleve_data, colWidths=[150, 250])
-    t.setStyle(TableStyle([
-        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
-        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('ALIGN', (0, 0), (0, -1), 'RIGHT'),
-    ]))
-    elements.append(t)
-    
-    # Signature
-    elements.append(Paragraph("<br/><br/>_________________________________________", style_normal))
-    elements.append(Paragraph("Signature", style_normal))
-    
-    # Génération du PDF
-    doc.build(elements)
+    elements.append(create_table(admin_data))
+
+    # === Section 2 : Informations Personnelles ===
+    elements.append(Paragraph("2. Informations Personnelles", section_title_style))
+    perso_data = [
+        ["Nom", eleve.nom],
+        ["Prénom", eleve.prenom],
+        ["Date de naissance", eleve.date_naissance.strftime("%d/%m/%Y")],
+        ["Lieu de naissance", eleve.lieu_naissance or "—"],
+        ["Sexe", dict(Eleve.SEXE_CHOICES).get(eleve.sexe)],
+        ["Adresse", eleve.adresse or "—"],
+        ["Téléphone", eleve.telephone or "—"],
+        ["Email", eleve.email or "—"]
+    ]
+    elements.append(create_table(perso_data))
+
+    # === Section 3 : Coordonnées des Parents ===
+    elements.append(Paragraph("3. Coordonnées des Parents", section_title_style))
+    parent_data = [
+        ["Nom du père", eleve.nom_pere or "—"],
+        ["Téléphone du père", eleve.telephone_pere or "—"],
+        ["Email du père", eleve.email_pere or "—"],
+        ["Nom de la mère", eleve.nom_mere or "—"],
+        ["Téléphone de la mère", eleve.telephone_mere or "—"],
+        ["Email de la mère", eleve.email_mere or "—"]
+    ]
+    elements.append(create_table(parent_data))
+
+    # === Section 4 : Informations Médicales ===
+    elements.append(Paragraph("4. Informations Médicales", section_title_style))
+    medical_data = [
+        ["État de santé", eleve.etat_sante or "—"],
+        ["Aptitude", eleve.aptitude or "—"],
+        ["Groupe sanguin", eleve.groupe_sanguin or "—"],
+        ["Maladies chroniques", eleve.maladies_chroniques or "—"],
+        ["Traitements en cours", eleve.traitements_en_cours or "—"],
+        ["Commentaires", eleve.commentaires_etat_general or "—"],
+        ["Observations", eleve.observations or "—"]
+    ]
+    elements.append(create_table(medical_data))
+
+    # === Signature ===
+    elements.append(Spacer(1, 30))
+    elements.append(Paragraph("Fait à ____________________ le ____ / ____ / _______", label_style))
+    elements.append(Spacer(1, 20))
+    elements.append(Paragraph("Signature du Responsable", label_style))
+    elements.append(Paragraph("__________________________", label_style))
+
+    # Build avec header et footer
+    def add_header_footer(canvas, doc):
+        canvas.saveState()
+
+        # Header
+        canvas.setFont('Helvetica-Bold', 10)
+        canvas.setFillColor(colors.HexColor("#1F618D"))
+        canvas.drawString(40, A4[1] - 50, "École Supérieure Technique - Excellence et savoir")
+
+        # Footer
+        canvas.setFont('Helvetica', 9)
+        canvas.setFillColor(colors.grey)
+        canvas.drawString(40, 40, "📍 Adresse : 123, Rue de l’Avenir | ☎️ Tél : +212 600 000 000 | ✉️ Email : contact@ecoletech.ma")
+        canvas.drawRightString(A4[0] - 40, 40, f"Page {doc.page}")
+
+        canvas.restoreState()
+
+    doc.build(elements, onFirstPage=add_header_footer, onLaterPages=add_header_footer)
+
     buffer.seek(0)
-    
-    # Réponse HTTP
     response = HttpResponse(buffer, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="recu_inscription_{eleve.matricule}.pdf"'
     return response
+
+
+def create_table(data):
+    table = Table(data, colWidths=[160, 300])
+    table.setStyle(TableStyle([
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 0), (-1, -1), 9),
+        ('ROWBACKGROUNDS', (0, 0), (-1, -1), [colors.white, colors.HexColor("#EBF5FB")]),
+        ('GRID', (0, 0), (-1, -1), 0.3, colors.grey),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 6),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+    ]))
+    return table
+
+
+
 
 def liste_eleves(request):
     eleves = Eleve.objects.all()  # Récupère tous les élèves

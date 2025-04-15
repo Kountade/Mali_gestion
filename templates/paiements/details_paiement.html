@@ -103,9 +103,13 @@
                 <i class="bi bi-trash"></i> Supprimer
               </a>
               <!-- Remplacez le bouton JS par ceci -->
-              <a href="{% url 'facture_pdf' paiement.id %}" class="btn btn-primary btn-lg" target="_blank">
+              <a
+                href="{% url 'facture_pdf' paiement.id %}"
+                target="_blank"
+                class="btn btn-primary btn-lg"
+              >
                 <i class="bi bi-file-earmark-pdf"></i> Générer une Facture
-            </a>
+              </a>
               <a
                 href="{% url 'liste_paiements' %}"
                 class="btn btn-secondary btn-lg"
@@ -119,5 +123,99 @@
     </div>
   </div>
 </div>
+
+<!-- Script pour générer une facture en PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  document
+    .getElementById("generer-facture")
+    .addEventListener("click", function () {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({
+        orientation: "portrait", // Orientation portrait
+        unit: "mm", // Utiliser des millimètres pour les dimensions
+        format: [80, 150], // Format compact (largeur x hauteur)
+      });
+
+      // Titre de la facture
+      doc.setFontSize(10); // Taille de police réduite
+      doc.setFont("helvetica", "bold");
+      doc.text("FACTURE DE PAIEMENT", 5, 10);
+
+      // Ligne de séparation
+      doc.setLineWidth(0.2);
+      doc.line(5, 12, 75, 12);
+
+      // Informations de l'élève
+      doc.setFontSize(8); // Taille de police réduite
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        `Élève : ${"{{ paiement.eleve.nom }} {{ paiement.eleve.prenom }}"}`,
+        5,
+        18
+      );
+      doc.text(`Classe : ${"{{ paiement.eleve.classe.nom }}"}`, 5, 22);
+      doc.text(`Matricule : ${"{{ paiement.eleve.matricule }}"}`, 5, 26);
+
+      // Informations des parents
+      doc.text("Informations des Parents :", 5, 32);
+      doc.text(
+        `Nom du Père : ${"{{ eleve.nom_pere|default:'Non renseigné' }}"}`,
+        5,
+        36
+      );
+      doc.text(
+        `Téléphone du Père : ${"{{ eleve.telephone_pere|default:'Non renseigné' }}"}`,
+        5,
+        40
+      );
+      doc.text(
+        `Nom de la Mère : ${"{{ eleve.nom_mere|default:'Non renseigné' }}"}`,
+        5,
+        44
+      );
+      doc.text(
+        `Téléphone de la Mère : ${"{{ eleve.telephone_mere|default:'Non renseigné' }}"}`,
+        5,
+        48
+      );
+
+      // Informations du paiement
+      doc.text("Détails du Paiement :", 5, 54);
+      doc.text(`Référence : ${"{{ paiement.reference }}"}`, 5, 58);
+      doc.text(
+        `Date de Paiement : ${"{{ paiement.date_paiement|date:'d/m/Y' }}"}`,
+        5,
+        62
+      );
+      doc.text(`Statut : ${"{{ paiement.get_statut_display }}"}`, 5, 66);
+      doc.text(`Montant : ${"{{ paiement.montant }} €"}`, 5, 70);
+      doc.text(
+        `Plan de Paiement : ${"{{ paiement.get_plan_paiement_display }}"}`,
+        5,
+        74
+      );
+      doc.text(`Mois/Année : ${"{{ paiement.mois_annee }}"}`, 5, 78);
+
+      // Commentaires
+      doc.text("Commentaires :", 5, 84);
+      doc.text(
+        `${"{{ paiement.commentaires|default:'Aucun commentaire' }}"}`,
+        5,
+        88,
+        { maxWidth: 70 }
+      );
+
+      // Ligne de séparation finale
+      doc.line(5, 140, 75, 140);
+
+      // Message de remerciement
+      doc.setFontSize(8);
+      doc.text("Merci pour votre confiance !", 5, 144);
+
+      // Enregistrer le PDF
+      doc.save(`Facture_{{ paiement.reference }}.pdf`);
+    });
+</script>
 
 {% endblock content %}

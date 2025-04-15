@@ -1,8 +1,5 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block title %}{{ page_title }}{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %}{{ page_title }}
+{% endblock %} {% block content %}
 <div class="container mt-3">
   <!-- En-tête avec boutons d'action -->
   <div class="d-flex justify-content-between align-items-center mb-3">
@@ -10,10 +7,16 @@
       <i class="fas fa-user-graduate text-primary"></i> Fiche Élève
     </h2>
     <div>
-      <a href="{% url 'liste_eleves' %}" class="btn btn-outline-secondary btn-sm">
+      <a
+        href="{% url 'liste_eleves' %}"
+        class="btn btn-outline-secondary btn-sm"
+      >
         <i class="fas fa-arrow-left"></i> Retour
       </a>
-      <a href="{% url 'modifier_eleve' eleve.pk %}" class="btn btn-primary btn-sm">
+      <a
+        href="{% url 'modifier_eleve' eleve.pk %}"
+        class="btn btn-primary btn-sm"
+      >
         <i class="fas fa-edit"></i> Modifier
       </a>
     </div>
@@ -24,7 +27,9 @@
     <div class="card-header bg-primary text-white py-2">
       <div class="d-flex justify-content-between align-items-center">
         <h4 class="card-title mb-0">{{ eleve.prenom }} {{ eleve.nom }}</h4>
-        <span class="badge bg-light text-dark">Matricule: {{ eleve.matricule }}</span>
+        <span class="badge bg-light text-dark"
+          >Matricule: {{ eleve.matricule }}</span
+        >
       </div>
     </div>
 
@@ -32,19 +37,25 @@
       <!-- Section Photo et Info -->
       <div class="row align-items-center mb-3">
         <div class="col-md-2 text-center">
-          <div class="position-relative" style="width: 120px; height: 120px;">
+          <div class="position-relative" style="width: 120px; height: 120px">
             {% if eleve.photo %}
-            <img src="{{ eleve.photo.url }}" 
-                 class="img-thumbnail rounded-circle h-100 w-100 object-fit-cover" 
-                 alt="Photo de l'élève">
+            <img
+              src="{{ eleve.photo.url }}"
+              class="img-thumbnail rounded-circle h-100 w-100 object-fit-cover"
+              alt="Photo de l'élève"
+            />
             {% else %}
-            <img src="{% static 'images/default-avatar.png' %}" 
-                 class="img-thumbnail rounded-circle h-100 w-100 object-fit-cover" 
-                 alt="Photo par défaut">
+            <img
+              src="{% static 'images/default-avatar.png' %}"
+              class="img-thumbnail rounded-circle h-100 w-100 object-fit-cover"
+              alt="Photo par défaut"
+            />
             {% endif %}
-            <span class="position-absolute bottom-0 end-0 bg-{% if eleve.frais_inscription == 'P' %}success{% else %}danger{% endif %} rounded-circle p-2" 
-                  style="width: 20px; height: 20px;" 
-                  title="Statut paiement: {{ eleve.get_frais_inscription_display }}">
+            <span
+              class="position-absolute bottom-0 end-0 bg-{% if eleve.frais_inscription == 'P' %}success{% else %}danger{% endif %} rounded-circle p-2"
+              style="width: 20px; height: 20px"
+              title="Statut paiement: {{ eleve.get_frais_inscription_display }}"
+            >
             </span>
           </div>
         </div>
@@ -52,21 +63,46 @@
         <div class="col-md-10">
           <div class="row">
             <div class="col-md-4">
-              <p class="mb-1"><strong><i class="fas fa-id-card text-muted"></i> Identité</strong></p>
-              <p class="mb-1 text-muted small">{{ eleve.get_sexe_display }}, né(e) le {{ eleve.date_naissance|date:"d/m/Y" }}</p>
-              <p class="mb-1 text-muted small">{{ eleve.lieu_naissance|default:"Lieu de naissance non renseigné" }}</p>
+              <p class="mb-1">
+                <strong
+                  ><i class="fas fa-id-card text-muted"></i> Identité</strong
+                >
+              </p>
+              <p class="mb-1 text-muted small">
+                {{ eleve.get_sexe_display }}, né(e) le {{ eleve.date_naissance|date:"d/m/Y" }}
+              </p>
+              <p class="mb-1 text-muted small">
+                {{ eleve.lieu_naissance|default:"Lieu de naissance non renseigné" }}
+              </p>
             </div>
             <div class="col-md-4">
-              <p class="mb-1"><strong><i class="fas fa-graduation-cap text-muted"></i> Scolarité</strong></p>
-              <p class="mb-1 text-muted small">{{ eleve.classe }} - {{ eleve.annee_scolaire }}</p>
-              <p class="mb-1 text-muted small">Inscrit le {{ eleve.date_inscription|date:"d/m/Y" }}</p>
+              <p class="mb-1">
+                <strong
+                  ><i class="fas fa-graduation-cap text-muted"></i>
+                  Scolarité</strong
+                >
+              </p>
+              <p class="mb-1 text-muted small">
+                {{ eleve.classe }} - {{ eleve.annee_scolaire }}
+              </p>
+              <p class="mb-1 text-muted small">
+                Inscrit le {{ eleve.date_inscription|date:"d/m/Y" }}
+              </p>
             </div>
             <div class="col-md-4">
-              <p class="mb-1"><strong><i class="fas fa-info-circle text-muted"></i> Statut</strong></p>
-              <span class="badge bg-{% if eleve.aptitude == 'Apt' %}success{% else %}warning{% endif %} text-dark mb-1">
+              <p class="mb-1">
+                <strong
+                  ><i class="fas fa-info-circle text-muted"></i> Statut</strong
+                >
+              </p>
+              <span
+                class="badge bg-{% if eleve.aptitude == 'Apt' %}success{% else %}warning{% endif %} text-dark mb-1"
+              >
                 {{ eleve.get_aptitude_display|default:"Aptitude non renseignée" }}
               </span>
-              <p class="mb-1 text-muted small">Groupe sanguin: {{ eleve.groupe_sanguin|default:"Non renseigné" }}</p>
+              <p class="mb-1 text-muted small">
+               Groupe sanguin: {{ eleve.groupe_sanguin|default:"Non renseigné" }}
+              </p>
             </div>
           </div>
         </div>
@@ -75,22 +111,46 @@
       <!-- Onglets -->
       <ul class="nav nav-tabs nav-justified mb-3" id="eleveTab" role="tablist">
         <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button">
+          <button
+            class="nav-link active"
+            id="contact-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#contact"
+            type="button"
+          >
             <i class="fas fa-address-card me-1"></i> Coordonnées
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="parents-tab" data-bs-toggle="tab" data-bs-target="#parents" type="button">
+          <button
+            class="nav-link"
+            id="parents-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#parents"
+            type="button"
+          >
             <i class="fas fa-users me-1"></i> Parents
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="sante-tab" data-bs-toggle="tab" data-bs-target="#sante" type="button">
+          <button
+            class="nav-link"
+            id="sante-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#sante"
+            type="button"
+          >
             <i class="fas fa-heartbeat me-1"></i> Santé
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" type="button">
+          <button
+            class="nav-link"
+            id="documents-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#documents"
+            type="button"
+          >
             <i class="fas fa-file-alt me-1"></i> Documents
           </button>
         </li>
@@ -104,17 +164,27 @@
             <div class="col-md-6">
               <div class="card mb-3 border-0 shadow-none">
                 <div class="card-body p-2">
-                  <h6 class="card-title text-primary"><i class="fas fa-home"></i> Adresse</h6>
-                  <p class="card-text">{{ eleve.adresse|default:"Non renseigné" }}</p>
+                  <h6 class="card-title text-primary">
+                    <i class="fas fa-home"></i> Adresse
+                  </h6>
+                  <p class="card-text">
+                    {{ eleve.adresse|default:"Non renseigné" }}
+                  </p>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="card mb-3 border-0 shadow-none">
                 <div class="card-body p-2">
-                  <h6 class="card-title text-primary"><i class="fas fa-phone"></i> Contact</h6>
-                  <p class="card-text mb-1">{{ eleve.telephone|default:"Téléphone non renseigné" }}</p>
-                  <p class="card-text">{{ eleve.email|default:"Email non renseigné" }}</p>
+                  <h6 class="card-title text-primary">
+                    <i class="fas fa-phone"></i> Contact
+                  </h6>
+                  <p class="card-text mb-1">
+                    {{ eleve.telephone|default:"Téléphone non renseigné" }}
+                  </p>
+                  <p class="card-text">
+                    {{ eleve.email|default:"Email non renseigné" }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -127,24 +197,46 @@
             <div class="col-md-6">
               <div class="card mb-3">
                 <div class="card-header bg-light py-2">
-                  <h6 class="mb-0"><i class="fas fa-male text-primary"></i> Père</h6>
+                  <h6 class="mb-0">
+                    <i class="fas fa-male text-primary"></i> Père
+                  </h6>
                 </div>
                 <div class="card-body p-3">
-                  <p class="mb-1"><strong>Nom:</strong> {{ eleve.nom_pere|default:"Non renseigné" }}</p>
-                  <p class="mb-1"><strong>Téléphone:</strong> {{ eleve.telephone_pere|default:"Non renseigné" }}</p>
-                  <p class="mb-0"><strong>Email:</strong> {{ eleve.email_pere|default:"Non renseigné" }}</p>
+                  <p class="mb-1">
+                    <strong>Nom:</strong> {{ eleve.nom_pere|default:"Non
+                    renseigné" }}
+                  </p>
+                  <p class="mb-1">
+                    <strong>Téléphone:</strong> {{
+                    eleve.telephone_pere|default:"Non renseigné" }}
+                  </p>
+                  <p class="mb-0">
+                    <strong>Email:</strong> {{ eleve.email_pere|default:"Non
+                    renseigné" }}
+                  </p>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="card mb-3">
                 <div class="card-header bg-light py-2">
-                  <h6 class="mb-0"><i class="fas fa-female text-primary"></i> Mère</h6>
+                  <h6 class="mb-0">
+                    <i class="fas fa-female text-primary"></i> Mère
+                  </h6>
                 </div>
                 <div class="card-body p-3">
-                  <p class="mb-1"><strong>Nom:</strong> {{ eleve.nom_mere|default:"Non renseigné" }}</p>
-                  <p class="mb-1"><strong>Téléphone:</strong> {{ eleve.telephone_mere|default:"Non renseigné" }}</p>
-                  <p class="mb-0"><strong>Email:</strong> {{ eleve.email_mere|default:"Non renseigné" }}</p>
+                  <p class="mb-1">
+                    <strong>Nom:</strong> {{ eleve.nom_mere|default:"Non
+                    renseigné" }}
+                  </p>
+                  <p class="mb-1">
+                    <strong>Téléphone:</strong> {{
+                    eleve.telephone_mere|default:"Non renseigné" }}
+                  </p>
+                  <p class="mb-0">
+                    <strong>Email:</strong> {{ eleve.email_mere|default:"Non
+                    renseigné" }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -154,32 +246,46 @@
         <!-- Onglet Santé -->
         <div class="tab-pane fade" id="sante" role="tabpanel">
           <div class="alert alert-info py-2 mb-3">
-            <i class="fas fa-info-circle"></i> Informations médicales confidentielles
+            <i class="fas fa-info-circle"></i> Informations médicales
+            confidentielles
           </div>
-          
+
           <div class="row">
             <div class="col-md-6">
               <div class="card mb-3">
                 <div class="card-header bg-light py-2">
-                  <h6 class="mb-0"><i class="fas fa-heart text-danger"></i> État de santé</h6>
+                  <h6 class="mb-0">
+                    <i class="fas fa-heart text-danger"></i> État de santé
+                  </h6>
                 </div>
                 <div class="card-body p-3">
-                  <p><strong>Groupe sanguin:</strong> {{ eleve.groupe_sanguin|default:"Non renseigné" }}</p>
+                  <p>
+                    <strong>Groupe sanguin:</strong> {{
+                    eleve.groupe_sanguin|default:"Non renseigné" }}
+                  </p>
                   <p><strong>Maladies chroniques:</strong></p>
-                  <div class="bg-light p-2 rounded">{{ eleve.maladies_chroniques|default:"Aucune"|linebreaks }}</div>
+                  <div class="bg-light p-2 rounded">
+                    {{ eleve.maladies_chroniques|default:"Aucune"|linebreaks }}
+                  </div>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="card mb-3">
                 <div class="card-header bg-light py-2">
-                  <h6 class="mb-0"><i class="fas fa-pills text-warning"></i> Traitements</h6>
+                  <h6 class="mb-0">
+                    <i class="fas fa-pills text-warning"></i> Traitements
+                  </h6>
                 </div>
                 <div class="card-body p-3">
                   <p><strong>Traitements en cours:</strong></p>
-                  <div class="bg-light p-2 rounded">{{ eleve.traitements_en_cours|default:"Aucun"|linebreaks }}</div>
+                  <div class="bg-light p-2 rounded">
+                    {{ eleve.traitements_en_cours|default:"Aucun"|linebreaks }}
+                  </div>
                   <p class="mt-2"><strong>Observations:</strong></p>
-                  <div class="bg-light p-2 rounded">{{ eleve.commentaires_etat_general|default:"Aucune"|linebreaks }}</div>
+                  <div class="bg-light p-2 rounded">
+                    {{ eleve.commentaires_etat_general|default:"Aucune"|linebreaks }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -192,23 +298,36 @@
             <div class="col-md-6">
               <div class="card mb-3">
                 <div class="card-header bg-light py-2">
-                  <h6 class="mb-0"><i class="fas fa-file-contract"></i> Documents administratifs</h6>
+                  <h6 class="mb-0">
+                    <i class="fas fa-file-contract"></i> Documents
+                    administratifs
+                  </h6>
                 </div>
                 <div class="card-body p-3">
-                  <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
                     <span>Extrait de naissance</span>
                     {% if eleve.extrait_naissance %}
-                    <a href="{{ eleve.extrait_naissance.url }}" class="btn btn-sm btn-outline-primary">
+                    <a
+                      href="{{ eleve.extrait_naissance.url }}"
+                      class="btn btn-sm btn-outline-primary"
+                    >
                       <i class="fas fa-download"></i> Télécharger
                     </a>
                     {% else %}
                     <span class="badge bg-secondary">Non fourni</span>
                     {% endif %}
                   </div>
-                  <div class="d-flex justify-content-between align-items-center">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
                     <span>Reçu d'inscription</span>
                     {% if eleve.reçu_inscription %}
-                    <a href="{{ eleve.reçu_inscription.url }}" class="btn btn-sm btn-outline-success">
+                    <a
+                      href="{{ eleve.reçu_inscription.url }}"
+                      class="btn btn-sm btn-outline-success"
+                    >
                       <i class="fas fa-file-pdf"></i> PDF
                     </a>
                     {% else %}
@@ -224,21 +343,33 @@
     </div>
 
     <!-- Pied de carte avec boutons -->
+    <!-- Dans le card-footer -->
     <div class="card-footer d-flex justify-content-between">
       <div>
-        <span class="text-muted small">Dernière modification: {{ eleve.updated_at|date:"d/m/Y H:i"|default:"Non spécifié" }}</span>
+        <span class="text-muted small"
+          >Dernière modification: {{ eleve.updated_at|date:"d/m/Y
+          H:i"|default:"Non spécifié" }}</span
+        >
       </div>
       <div>
-        <a href="{% url 'liste_eleves' %}" class="btn btn-outline-secondary btn-sm">
-          <i class="fas fa-arrow-left"></i> Retour à la liste
+        <a
+          href="{% url 'liste_eleves' %}"
+          class="btn btn-outline-secondary btn-sm"
+        >
+          <i class="fas fa-arrow-left"></i> Retour
         </a>
-        <a href="{% url 'modifier_eleve' eleve.pk %}" class="btn btn-primary btn-sm ms-2">
+        <a
+          href="{% url 'modifier_eleve' eleve.pk %}"
+          class="btn btn-primary btn-sm ms-2"
+        >
           <i class="fas fa-edit"></i> Modifier
         </a>
-        <a href="{% url 'generer_recu_inscription' eleve.pk %}" class="btn btn-success btn-sm ms-2">
-            <i class="fas fa-file-pdf"></i> Générer Reçu
-          </a>
-      
+        <a
+          href="{% url 'generer_recu_inscription' eleve.pk %}"
+          class="btn btn-success btn-sm ms-2"
+        >
+          <i class="fas fa-file-pdf"></i> Générer Reçu
+        </a>
       </div>
     </div>
   </div>
